@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en"><!-- InstanceBegin template="/Templates/index.dwt" codeOutsideHTMLIsLocked="false" -->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width; initial-scale=1; max-scale=1; user-scalable=0;">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <!-- <link rel="icon" href="favicon.ico"> -->
+        <!-- InstanceBeginEditable name="doctitle" -->
+		<title>Dashboard for EndlessRope</title>
+		<!-- InstanceEndEditable -->
+        <!-- Bootstrap core CSS -->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/fonts.css" rel="stylesheet">
+        <link href="css/sidebar.css" rel="stylesheet">
+
+        <!-- Custom styles for this template -->
+        <link href="css/dashboard.css" rel="stylesheet">
+
+    <!-- InstanceBeginEditable name="head" -->
+		<!-- InstanceEndEditable -->
+    </head>
+	 
+    <body>
+    
+    <div id="wrapper">
+    
+    <!-- InstanceBeginEditable name="popup" -->
+			<!-- InstanceEndEditable -->
+
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+            	<li class="sidebar-brand">
+					<img draggable='false' id="logo" src="img/endlessrope.png">
+				</li>
+            	<!-- InstanceBeginEditable name="menu" -->
+					<li class="active">
+						<a draggable='false' href="index.html"><img draggable='false' src="img/freeclclimb.png"><span>Free Climb</span></a>
+					</li>
+					<li class="">
+						<a draggable='false' href="timed.html"><img draggable='false' src="img/charts.png"><span>Timed Climb</span></a>
+					</li>
+					<li class="">
+						<a draggable='false' href="laps.html"><img draggable='false' src="img/laps.png"><span>Distance Climb</span></a>
+					</li>
+					<li class="">
+						<a draggable='false' href="config.html"><img draggable='false' src="img/config.png"><span>Configure</span></a>
+					</li>
+					<!--<li class="">
+					<a draggable='false' href="help.html"><img draggable='false' src="img/help.png"><span>Help</span></a>
+					</li> -->
+
+					<!-- InstanceEndEditable -->
+            </ul>
+        </div>
+        <!-- /#sidebar-wrapper -->
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <div class="container-fluid">
+                <div class="row">
+                
+                <!-- InstanceBeginEditable name="mainContent" -->
+
+						<div id="freeclimb" class="slide">
+							<button draggable='false' type="button" class="navbar-toggle">
+								<img draggable='false' src="img/freeclclimb.png">
+							</button>
+							<h1 class="page-header">Free Climb</h1>
+                            <div id="buttons">
+												<a draggable='false' class="btn btn-default btn-lg" id="stopReset" href="#"><span class="glyphicon glyphicon-repeat" aria-hidden="true"></span></a>
+												
+											</div>
+							<div class="row">
+								<div class="col-xs-6 placeholders">
+									<div class="col-xs-12 col-sm-6">
+										<h4>DISTANCE</h4>
+										<div class="col-xs-12">
+
+											<h1 id="distance">0</h1>
+											<span class="text-muted">FEET</span>
+										</div>
+									</div>
+									<div class="col-xs-12 col-sm-6">
+										<h4>TIME</h4>
+										<div class="col-xs-12">
+											<h2 id="theTime"></h2>
+											<span class="text-muted">MIN:SEC</span>
+										</div>
+									</div>
+
+								</div>
+								<div class="col-xs-6">
+                                	<h4>SPEED</h4>
+									<div id="tachometer" class="row">
+										<div class="col-xs-12">
+											<div id="speed_gauge" data-bgColor="#fff" class="gauge"></div>
+                                            <span class="text-muted">FT/MIN</span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div id="dash" class="row">
+
+								<div id="avgspeed_wrap" class="specs col-xs-6">
+									<div id="avgspeed">
+										<span class="text-muted">AVERAGE Speed:</span>
+										<strong id="avgSpeed">0</strong>
+										FT/MIN
+									</div>
+								</div>
+								<div id="topspeed_wrap" class="specs col-xs-6">
+									<div id="topspeed">
+										<span class="text-muted">TOP Speed:</span>
+										<strong id="topSpeed">0</strong>
+										FT/MIN
+									</div>
+								</div>
+							</div>
+
+						</div>
+						<!-- InstanceEndEditable -->
+                </div>
+            </div>
+        </div>
+        <!-- /#page-content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+
+        <!-- Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster --> 
+        <script src="js/jquery.min.js"></script>
+        
+        
+        <!--<link rel="stylesheet" href="../css/debug-windowsize.css">
+        <script src="../js/window-size.js"></script>-->
+        
+        <script type="text/javascript" src="js/textFit.min.js"></script>
+		<script type="text/javascript" src="js/fastclick.js"></script>
+        <script type="text/javascript" src="js/jquery.popupoverlay.js"></script>
+        
+        <script type="text/javascript" src="bower_components/noty/js/noty/packaged/jquery.noty.packaged.min.js"></script>
+        
+        <script src="js/raphael-2.1.4.min.js"></script>
+         <script src="js/justgage.js"></script> 
+         
+        <!--<script src="js/jquery.knob.min.js"></script>-->
+        
+        <script src="js/bootstrap.min.js"></script>
+        <!-- <script src="/socket.io/socket.io.js"></script> -->
+        <script src="lib/socket.io-1.3.5.js"></script>
+        
+        <!-- InstanceBeginEditable name="script" -->
+		<script src="js/jquery.runner.js"></script>
+		<script src="pagejs/freerun_page.js"></script>
+		<!-- InstanceEndEditable --> 
+        
+        <!-- Menu Toggle Script -->
+		<script>
+        $(".navbar-toggle").click(function(e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+		$("#wrapper.toggled").click(function(e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+    </script>
+        
+    </body>
+<!-- InstanceEnd --></html>

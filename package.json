@@ -1,0 +1,23 @@
+{
+  "name": "endlessrope",
+  "version": "0.9.0",
+  "description": "Axios EndlessRope",
+  "dependencies": {
+    "express": "*",
+    "node-ip": "*",
+    "onoff": "*",
+    "running-average": "*",
+    "socket.io": "*",
+    "timer-stopwatch": "*",
+    "update-manager": "^0.3.0"
+  },
+  "script": {
+    "start": "node index.js"
+  },
+  "devDependencies": {
+    "console.table": "^0.4.0",
+    "grunt": "*",
+    "grunt-contrib-watch": "*",
+    "grunt-express-server": "*"
+  }
+}

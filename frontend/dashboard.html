@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en"><!-- InstanceBegin template="/Templates/index.dwt" codeOutsideHTMLIsLocked="false" -->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width; initial-scale=1; max-scale=1; user-scalable=0;">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <!-- <link rel="icon" href="favicon.ico"> -->
+        <!-- InstanceBeginEditable name="doctitle" -->
+		<title>Dashboard for EndlessRope</title>
+		<!-- InstanceEndEditable -->
+        <!-- Bootstrap core CSS -->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/fonts.css" rel="stylesheet">
+        <link href="css/sidebar.css" rel="stylesheet">
+
+        <!-- Custom styles for this template -->
+        <link href="css/dashboard.css" rel="stylesheet">
+
+    <!-- InstanceBeginEditable name="head" -->
+		<!-- InstanceEndEditable -->
+    </head>
+	 
+    <body>
+    
+    <div id="wrapper">
+    
+    <!-- InstanceBeginEditable name="popup" -->
+    <!-- InstanceEndEditable -->
+
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+            	<li class="sidebar-brand">
+					<img draggable='false' id="logo" src="img/endlessrope.png">
+				</li>
+            	<!-- InstanceBeginEditable name="menu" -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <img src="img/freeclclimb.png">
+                    </button>
+                    <img id="logo" src="img/endlessrope.png">
+                </div>
+
+                <div id="navbar" class="navbar-collapse collapse">
+          			<ul class="nav navbar-nav navbar-right">
+          				<li class="active">
+                            <a href="index.html"><img src="img/freeclclimb.png"><span>Free Climb</span></a>
+                        </li>
+                        <li class="">
+                            <a href="timed.html"><img src="img/charts.png"><span>Timed Climb</span></a>
+                        </li>
+                        <li class="">
+                            <a href="laps.html"><img src="img/laps.png"><span>Distance Climb</span></a>
+                        </li>
+                        <li class="">
+                            <a href="config.html"><img src="img/config.png"><span>Configure</span></a>
+                        </li>
+                        <!-- <li class="">
+                            <a href="../help.html"><img src="../img/help.png"><span>Help</span></a>
+                        </li> -->
+                    </ul>
+
+                </div>
+                <!-- InstanceEndEditable -->
+            </ul>
+        </div>
+        <!-- /#sidebar-wrapper -->
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <div class="container-fluid">
+                <div class="row">
+                
+                <!-- InstanceBeginEditable name="mainContent" -->
+
+					<div id="freeclimb" class="slide">
+						<!-- <h1 class="page-header">Free Climb</h1>
+
+						<div class="row placeholders">
+							<div class="col-xs-12 col-sm-6">
+								<h4>DISTANCE</h4>
+								<div class="col-xs-10">
+
+									<h1 id="distance">0</h1>
+									<span class="text-muted">FEET</span>
+								</div>
+								<div class="col-xs-2">
+									<div id="buttons">
+										<a draggable='false' class="btn btn-default btn-lg" id="stopReset" href="#"><span class="glyphicon glyphicon-repeat" aria-hidden="true"></span></a>
+										<br>
+										RESET
+									</div>
+								</div>
+							</div>
+							<div class="col-xs-12 col-sm-6">
+								<h4>TIME</h4>
+								<div class="col-xs-10">
+									<h2 id="theTime"></h2>
+									<span class="text-muted">MIN:SEC</span>
+								</div>
+								<div class="col-xs-2">
+
+								</div>
+							</div>
+
+						</div> -->
+                        <div id="dash" class="row">
+
+	                        <div id="avgspeed_wrap" class="specs col-xs-6">
+	                            <div id="avgspeed">AVERAGE Speed:<br> <strong id="avgSpeed">0</strong><br> FT/MIN</div>
+	                        </div>
+	                        <div id="topspeed_wrap" class="specs col-xs-6">
+	                            <div id="topspeed">TOP Speed:<br> <strong id="topSpeed">0</strong><br> FT/MIN</div>
+	                        </div>
+                		</div>
+                		<div id="tachometer" class="row">
+                			<div class="col-xs-12">
+	            				<div id="speed_gauge" class="gauge"></div>
+	                    	</div>
+                		</div>
+					</div>
+					<!-- InstanceEndEditable -->
+                </div>
+            </div>
+        </div>
+        <!-- /#page-content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+
+        <!-- Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster --> 
+        <script src="js/jquery.min.js"></script>
+        
+        
+        <!--<link rel="stylesheet" href="../css/debug-windowsize.css">
+        <script src="../js/window-size.js"></script>-->
+        
+        <script type="text/javascript" src="js/textFit.min.js"></script>
+		<script type="text/javascript" src="js/fastclick.js"></script>
+        <script type="text/javascript" src="js/jquery.popupoverlay.js"></script>
+        
+        <script type="text/javascript" src="bower_components/noty/js/noty/packaged/jquery.noty.packaged.min.js"></script>
+        
+        <!--<script src="../js/raphael-2.1.4.min.js"></script>
+         <script src="../js/justgage.js"></script> -->
+         
+        <script src="js/jquery.knob.min.js"></script>
+        
+        <script src="js/bootstrap.min.js"></script>
+        <!-- <script src="/socket.io/socket.io.js"></script> -->
+        <script src="lib/socket.io-1.3.5.js"></script>
+        
+        <!-- InstanceBeginEditable name="script" -->
+		<script src="js/jquery.runner.js"></script>
+		<script src="pagejs/freerun_page.js"></script>
+		<!-- InstanceEndEditable --> 
+        
+        <!-- Menu Toggle Script -->
+		<script>
+        $(".navbar-toggle").click(function(e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+		$("#wrapper.toggled").click(function(e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+    </script>
+        
+    </body>
+<!-- InstanceEnd --></html>

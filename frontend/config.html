@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en"><!-- InstanceBegin template="/Templates/index.dwt" codeOutsideHTMLIsLocked="false" -->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width; initial-scale=1; max-scale=1; user-scalable=0;">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <!-- <link rel="icon" href="favicon.ico"> -->
+        <!-- InstanceBeginEditable name="doctitle" -->
+        <title>Dashboard for EndlessRope</title>
+        <!-- InstanceEndEditable -->
+        <!-- Bootstrap core CSS -->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/fonts.css" rel="stylesheet">
+        <link href="css/sidebar.css" rel="stylesheet">
+
+        <!-- Custom styles for this template -->
+        <link href="css/dashboard.css" rel="stylesheet">
+
+    <!-- InstanceBeginEditable name="head" -->
+    
+    <!-- InstanceEndEditable -->
+    </head>
+	 
+    <body>
+    
+    <div id="wrapper">
+    
+    <!-- InstanceBeginEditable name="popup" -->
+    <!-- Add content to the popup -->
+	  <div id="my_popup">
+	
+	    <h2>Would you like to shutdown?</h2>
+	
+	    <!-- Add an optional button to close the popup -->
+	    <button id="cancel">Cancel</button>
+	    <button id="shutdown">Shutdown</button>
+	
+	  </div>
+	  <div id="shutting_down">
+	
+	    <h2>Shutting down now</h2>
+		
+	    <!-- Add an optional button to close the popup 
+	    <button class="my_popup_close">Close</button>-->
+	
+	  </div>
+    <!-- InstanceEndEditable -->
+
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+            	<li class="sidebar-brand">
+					<img draggable='false' id="logo" src="img/endlessrope.png">
+				</li>
+            	<!-- InstanceBeginEditable name="menu" -->
+
+          				<li class="">
+                            <a draggable='false' href="index.html"><img draggable='false' src="img/freeclclimb.png"><span>Free Climb</span></a>
+                        </li>
+                        <li class="">
+                            <a draggable='false' href="timed.html"><img draggable='false' src="img/charts.png"><span>Timed Climb</span></a>
+                        </li>
+                        <li class="">
+                            <a draggable='false' href="laps.html"><img draggable='false' src="img/laps.png"><span>Distance Climb</span></a>
+                        </li>
+                        <li class="active">
+                            <a draggable='false' href="config.html"><img draggable='false' src="img/config.png"><span>Configure</span></a>
+                        </li>
+                        <!--<li class="">
+                             <a href="help.html"><img draggable='false' src="img/help.png"><span>Help</span></a>
+                        </li> -->
+                <!-- InstanceEndEditable -->
+            </ul>
+        </div>
+        <!-- /#sidebar-wrapper -->
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <div class="container-fluid">
+                <div class="row">
+                
+                <!-- InstanceBeginEditable name="mainContent" -->
+				
+                <div class="slide">
+                <button draggable='false' type="button" class="navbar-toggle">
+                        <span class="sr-only">Toggle navigation</span>
+                        <img draggable='false' src="img/config.png">
+                    </button>
+                  <h1 class="page-header">Configuration</h1>
+						
+	                    <div class="table-responsive">
+	
+	                        <table id="timeTable" class="table table-striped">
+	                            <tbody>
+                                <!-- <tr>
+	                            		<td>
+	                            			Multiplayer
+	                            		</td>
+	                            		<td>
+	                            			<a href="http://192.168.1.5:8080/player.html" draggable='false' class="btn btn-md btn-primary">Launch RopeRace</a>
+	                            		</td>
+	                            	</tr> -->
+	                            	<tr>
+	                            		<td>
+	                            			IP Address
+	                            		</td>
+	                            		<td id="ipaddress">000.000.0.00</td>
+	                            	</tr>
+	                            	<tr>
+	                            		<td>QR Code</td>
+	                            		<td><div id="theqr"></div>
+	                            			
+	                            		</td>
+	                            	</tr>
+	                            	<tr>
+	                            		<td>
+	                            			SHUTDOWN
+	                            		</td>
+	                            		<td>
+	                            			<a draggable='false' class="btn btn-md btn-primary" id="newbutton">SHUTDOWN</a>
+	                            		</td>
+	                            	</tr>
+	                            	<tr>
+	                            		<td>
+	                            			Software Version
+	                            		</td>
+	                            		<td>
+	                            			ver. <span id="version">0.8.1 alpha</span>
+	                            		</td>
+	                            	</tr>
+	                            	<!-- <tr>
+	                            		<td>
+	                            			Dashboard
+	                            		</td>
+	                            		<td>
+	                            			<a href="dashboard.html" draggable='false' class="btn btn-sm btn-primary" id="newbutton">Launch Dashboard</a>
+	                            		</td>
+	                            	</tr> -->
+	                               
+	                            </tbody>
+	                        </table>
+	                    </div>
+                </div>
+                
+                <!-- InstanceEndEditable -->
+                </div>
+            </div>
+        </div>
+        <!-- /#page-content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+
+        <!-- Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster --> 
+        <script src="js/jquery.min.js"></script>
+        
+        
+        <!--<link rel="stylesheet" href="../css/debug-windowsize.css">
+        <script src="../js/window-size.js"></script>-->
+        
+        <script type="text/javascript" src="js/textFit.min.js"></script>
+		<script type="text/javascript" src="js/fastclick.js"></script>
+        <script type="text/javascript" src="js/jquery.popupoverlay.js"></script>
+        
+        <script type="text/javascript" src="bower_components/noty/js/noty/packaged/jquery.noty.packaged.min.js"></script>
+        
+        <!--<script src="../js/raphael-2.1.4.min.js"></script>
+         <script src="../js/justgage.js"></script> -->
+         
+        <script src="js/jquery.knob.min.js"></script>
+        
+        <script src="js/bootstrap.min.js"></script>
+        <!-- <script src="/socket.io/socket.io.js"></script> -->
+        <script src="lib/socket.io-1.3.5.js"></script>
+        
+        <!-- InstanceBeginEditable name="script" -->
+		<script src="js/qrcode.js"></script>
+		<script src="js/jquery.popupoverlay.js"></script>
+        <script src="pagejs/config.js"></script>
+		<!-- InstanceEndEditable --> 
+        
+        <!-- Menu Toggle Script -->
+		<script>
+        $(".navbar-toggle").click(function(e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+		$("#wrapper.toggled").click(function(e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+    </script>
+        
+    </body>
+<!-- InstanceEnd --></html>
