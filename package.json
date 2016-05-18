@@ -3,6 +3,7 @@
   "version": "0.9.0",
   "description": "Axios EndlessRope",
   "dependencies": {
+    "auto-updater": "^1.0.2",
     "express": "*",
     "node-ip": "*",
     "onoff": "*",
