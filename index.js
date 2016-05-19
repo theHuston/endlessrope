@@ -84,6 +84,8 @@ var displayUp = false;
 
 var speedometer = 0;
 
+var message = "";
+
 var REFRESH_SPEED_MS = 1000;
 //125
 //15000;
@@ -130,6 +132,11 @@ io.on('connection', function(socket) {
 	console.log('a user connected');
 
 	io.emit('init', addresses[0], version);
+	
+	socket.on('check for updates', function(){
+		// Start checking
+		autoupdater.fire('check');
+	});
 
 	socket.on('disconnect', function() {
 		resetState();
@@ -262,9 +269,6 @@ http.listen(8080, function() {
 		}
 	});
 
-	// Start checking
-	autoupdater.fire('check');
-
 	sensor.on('update', function(hz) {
 
 		//console.log("frequency",hz)
@@ -319,43 +323,63 @@ autoupdater.on('git-clone', function() {
 	console.log("You have a clone of the repository. Use 'git pull' to be up-to-date");
 });
 autoupdater.on('check.up-to-date', function(v) {
-	console.info("You have the latest version: " + v);
+	message = "You have the latest version: " + v;
+	console.info( message );
+	io.emit('updatesGood', message );
 });
 autoupdater.on('check.out-dated', function(v_old, v) {
-	console.warn("Your version is outdated. " + v_old + " of " + v);
+	message = "Your version is outdated. " + v_old + " of " + v;
+	console.warn( message );
+	io.emit('updatesBad', message );
 	autoupdater.fire('download-update');
 	// If autoupdate: false, you'll have to do this manually.
 	// Maybe ask if the'd like to download the update.
 });
 autoupdater.on('update.downloaded', function() {
-	console.log("Update downloaded and ready for install");
+	message = "Update downloaded and ready for install";
+	console.log( message );
+	io.emit('updatesUpdate', message );
 	autoupdater.fire('extract');
 	// If autoupdate: false, you'll have to do this manually.
 });
 autoupdater.on('update.not-installed', function() {
-	console.log("The Update was already in your folder! It's read for install");
+	message = "The Update was already in your folder! It's read for install";
+	console.log( message );
+	io.emit('updatesUpdate', message );
 	autoupdater.fire('extract');
 	// If autoupdate: false, you'll have to do this manually.
 });
 autoupdater.on('update.extracted', function() {
-	console.log("Update extracted successfully!");
-	console.warn("RESTART THE APP!");
+	message = "Update extracted successfully!";
+	console.log( message );
+	console.warn("RESTART THE MACHINE!");
+	io.emit('updatesUpdate', message );
 });
 autoupdater.on('download.start', function(name) {
-	console.log("Starting downloading: " + name);
+	message = "Starting downloading: " + name;
+	console.log( message );
+	io.emit('updatesUpdate', message );
 });
 autoupdater.on('download.progress', function(name, perc) {
 	process.stdout.write("Downloading " + perc + "%");
 });
 autoupdater.on('download.end', function(name) {
-	console.log("Downloaded " + name);
+	message = "Downloaded " + name;
+	console.log( message );
+	io.emit('updatesUpdate', message );
 });
 autoupdater.on('download.error', function(err) {
-	console.error("Error when downloading: " + err);
+	message = "Error when downloading: " + err;
+	console.error( message );
+	io.emit('updatesUpdate', message );
 });
 autoupdater.on('end', function() {
-	console.log("The app is ready to function");
+	message = "The app is ready to function";
+	console.log( message );
+	io.emit('updatesUpdate', message );
 });
 autoupdater.on('error', function(name, e) {
+	message = name + " : " + e;
 	console.error(name, e);
+	io.emit('updatesUpdate', message );
 });
