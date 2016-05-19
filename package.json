@@ -1,6 +1,10 @@
 {
   "name": "endlessrope",
   "version": "0.9.0",
+  "auto-updater":{
+    "repo":"theHuston/endlessrope",
+    "branch":"master"
+  },
   "description": "Axios EndlessRope",
   "dependencies": {
     "auto-updater": "^1.0.2",
@@ -9,8 +13,7 @@
     "onoff": "*",
     "running-average": "*",
     "socket.io": "*",
-    "timer-stopwatch": "*",
-    "update-manager": "^0.3.0"
+    "timer-stopwatch": "*"
   },
   "script": {
     "start": "node index.js"
@@ -22,3 +25,4 @@
     "grunt-express-server": "*"
   }
 }
+
