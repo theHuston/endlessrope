@@ -14,7 +14,7 @@ $(document).ready(function() {
 	
 	$("#updateCheck").click(function(){
 		console.log("updateCheck pressed.");
-		showMessage("Checking for Updates.");
+		showMessage("Checking for Updates.","alert");
 		socket.emit('check for updates', '');
 	});
 	
@@ -76,20 +76,13 @@ socket.on('init', function( _ipAddress, _version ){
 	
 });
 
-socket.on('updateGood', function( _message ){
-	showMessage( _message );
+socket.on('showMessage', function( _message, _type, _layout, _timeout ){
+	showMessage( _message, _type, _layout, _timeout );
 });
 
-socket.on('updateUpdate', function( _message ){
-	showMessage( _message );
-});
-
-socket.on('updateBad', function( _message ){
-	showMessage( _message );
-});
-
-function showMessage( msg, type, layout ){
+function showMessage( msg, type, layout, timeout ){
 	if (typeof layout === 'undefined') { layout = 'topCenter'; }
 	if (typeof type === 'undefined') { type = 'information'; }
-	messageNote = noty({layout: layout, type: type, text: msg, timeout: 3000 });
+	if (typeof timeout === 'undefined') { timeout = 3000; }
+	messageNote = noty({layout: layout, type: type, text: msg, timeout: timeout });
 }
