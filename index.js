@@ -325,12 +325,12 @@ autoupdater.on('git-clone', function() {
 autoupdater.on('check.up-to-date', function(v) {
 	message = "You have the latest version: " + v;
 	console.info( message );
-	io.emit('updateGood', message );
+	io.emit('showMessage', message, "success", "topCenter", null );
 });
 autoupdater.on('check.out-dated', function(v_old, v) {
 	message = "Your version is outdated. " + v_old + " of " + v;
 	console.warn( message );
-	io.emit('updateBad', message );
+	io.emit('showMessage', message, "warning" );
 	autoupdater.fire('download-update');
 	// If autoupdate: false, you'll have to do this manually.
 	// Maybe ask if the'd like to download the update.
@@ -338,27 +338,28 @@ autoupdater.on('check.out-dated', function(v_old, v) {
 autoupdater.on('update.downloaded', function() {
 	message = "Update downloaded and ready for install";
 	console.log( message );
-	io.emit('updateUpdate', message );
+	io.emit('showMessage', message,"alert" );
 	autoupdater.fire('extract');
 	// If autoupdate: false, you'll have to do this manually.
 });
 autoupdater.on('update.not-installed', function() {
 	message = "The Update was already in your folder! It's read for install";
 	console.log( message );
-	io.emit('updateUpdate', message );
+	io.emit('showMessage', message );
 	autoupdater.fire('extract');
 	// If autoupdate: false, you'll have to do this manually.
 });
 autoupdater.on('update.extracted', function() {
 	message = "Update extracted successfully!";
+	io.emit('showMessage', message, "success" );
 	console.log( message );
 	console.warn("RESTART THE MACHINE!");
-	io.emit('updateUpdate', message );
+	io.emit('showMessage', "Please restart the machine now. ", "infomration", null );
 });
 autoupdater.on('download.start', function(name) {
 	message = "Starting downloading: " + name;
 	console.log( message );
-	io.emit('updateUpdate', message );
+	io.emit('showMessage', message, "alert" );
 });
 autoupdater.on('download.progress', function(name, perc) {
 	process.stdout.write("Downloading " + perc + "%");
@@ -366,20 +367,20 @@ autoupdater.on('download.progress', function(name, perc) {
 autoupdater.on('download.end', function(name) {
 	message = "Downloaded " + name;
 	console.log( message );
-	io.emit('updateUpdate', message );
+	io.emit('showMessage', message, "alert" );
 });
 autoupdater.on('download.error', function(err) {
 	message = "Error when downloading: " + err;
 	console.error( message );
-	io.emit('updateUpdate', message );
+	io.emit('showMessage', message, "error", null );
 });
 autoupdater.on('end', function() {
-	message = "The app is ready to function";
+	message = "Update Complete";
 	console.log( message );
-	io.emit('updateUpdate', message );
+	io.emit('showMessage', message );
 });
 autoupdater.on('error', function(name, e) {
 	message = name + " : " + e;
 	console.error(name, e);
-	io.emit('updateUpdate', message );
+	io.emit('showMessage', message, "error", null );
 });
