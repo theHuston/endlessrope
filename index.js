@@ -351,15 +351,15 @@ autoupdater.on('update.not-installed', function() {
 });
 autoupdater.on('update.extracted', function() {
 	message = "Update extracted successfully!";
-	io.emit('showMessage', message, "success" );
+	//io.emit('showMessage', message, "success" );
 	console.log( message );
 	console.warn("RESTART THE MACHINE!");
-	io.emit('showMessage', "Please restart the machine now. ", "infomration", null );
+	io.emit('showMessage', "Update extracted successfully! Please restart the machine now. ", "success", null );
 });
 autoupdater.on('download.start', function(name) {
 	message = "Starting downloading: " + name;
 	console.log( message );
-	io.emit('showMessage', message, "alert" );
+	io.emit('showMessage', message, "alert", 10000 );
 });
 autoupdater.on('download.progress', function(name, perc) {
 	process.stdout.write("Downloading " + perc + "%");
@@ -367,7 +367,7 @@ autoupdater.on('download.progress', function(name, perc) {
 autoupdater.on('download.end', function(name) {
 	message = "Downloaded " + name;
 	console.log( message );
-	io.emit('showMessage', message, "alert" );
+	//io.emit('showMessage', message, "alert" );
 });
 autoupdater.on('download.error', function(err) {
 	message = "Error when downloading: " + err;
@@ -377,7 +377,7 @@ autoupdater.on('download.error', function(err) {
 autoupdater.on('end', function() {
 	message = "Update Complete";
 	console.log( message );
-	io.emit('showMessage', message );
+	//io.emit('showMessage', message );
 });
 autoupdater.on('error', function(name, e) {
 	message = name + " : " + e;
