@@ -12,6 +12,12 @@ $(document).ready(function() {
 		$('#my_popup').popup("show");
 	});
 	
+	$("#updateCheck").click(function(){
+		console.log("updateCheck pressed.");
+		showMessage("Checking for Updates.");
+		socket.emit('check for updates', '');
+	});
+	
 	$("#cancel").click(function(){
 		$('#my_popup').popup("hide");
 	});
@@ -69,3 +75,21 @@ socket.on('init', function( _ipAddress, _version ){
 	console.log( ipAddress );
 	
 });
+
+socket.on('updateGood', function( _message ){
+	showMessage( _message );
+});
+
+socket.on('updateUpdate', function( _message ){
+	showMessage( _message );
+});
+
+socket.on('updateBad', function( _message ){
+	showMessage( _message );
+});
+
+function showMessage( msg, type, layout ){
+	if (typeof layout === 'undefined') { layout = 'topCenter'; }
+	if (typeof type === 'undefined') { type = 'information'; }
+	messageNote = noty({layout: layout, type: type, text: msg, timeout: 3000 });
+}
