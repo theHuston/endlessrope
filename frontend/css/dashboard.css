@@ -92,6 +92,14 @@ h5 {
 }
 .btn {
   cursor: none;
+  outline: none;
+}
+IMG {
+  cursor: none;
+  outline: none;
+}
+.btn:focus {
+  outline: none;
 }
 .dropdown-menu > li > a {
   display: block;
@@ -107,6 +115,11 @@ h5 {
 #theTime {
   font-size: 8em;
   line-height: 0.5;
+}
+#theSpeed {
+  font-size: 6em;
+  line-height: 0.5;
+  margin-top: -50px;
 }
 #logo {
   margin-top: 25px;
@@ -199,6 +212,9 @@ h5 {
 }
 .navbar-toggle img {
   /*width: 55px;*/
+}
+.sidebar-nav .btn {
+	text-align: left;
 }
 .page-header {
   padding-bottom: 15px;
@@ -352,14 +368,37 @@ h5 {
 #topspeed_wrap {
   text-align: center;
 }
+.gauge {
+    position: absolute;
+    /*margin-top: -50px;*/
+    /*margin-left: -80px;*/
+    /*width: 500px;*/
+    /*height: 400px;*/
+}
+#top_speed_gauge {
+	margin-top: -108px;
+}
+#minMax {
+    margin-top: -20px;
+    display: block;
+    margin-bottom: 40px;
+    width: 360px;
+}
+#label {
+	display: block;
+}
+#minMax .text-muted {
+    width: 70px;
+    text-align: center;
+}
 #speed_gauge {
   /*border: 1px solid black;*/
-  margin: -200px auto 0;
+  /*margin: -200px auto 0;*/
   padding: 0;
   max-width: 600px;
   text-align: center;
   /*border: 1px solid black;*/
-  width: 130%;
+  /*width: 130%;*/
   font-family: 'aviano_sansregular' !important;
 }
 td.red {
