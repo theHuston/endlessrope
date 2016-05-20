@@ -126,6 +126,16 @@ app.get('/', function(req, res) {
 	res.sendFile('./index.html');
 });
 
+function rebootTheMachine(){
+	console.log("Restarting machine");
+
+		exec("sudo reboot", function(error, stdout, stderr) {
+			if (error !== null) {
+				console.log("exec errror: " + error);
+			}
+		});
+}
+
 var testTimer;
 io.on('connection', function(socket) {
 	resetState();
@@ -161,13 +171,7 @@ io.on('connection', function(socket) {
 	});
 	
 	socket.on('please reboot', function(msg) {
-		console.log("Restarting machine");
-
-		exec("sudo reboot", function(error, stdout, stderr) {
-			if (error !== null) {
-				console.log("exec errror: " + error);
-			}
-		});
+		rebootTheMachine();
 	});
 
 	socket.on('on your mark', function(activity, option) {
@@ -366,6 +370,7 @@ autoupdater.on('update.extracted', function() {
 	console.log( message );
 	console.warn("RESTART THE MACHINE!");
 	io.emit('showMessage', "Update extracted successfully! Please restart the machine now. ", "success", null );
+	rebootTheMachine();
 });
 autoupdater.on('download.start', function(name) {
 	message = "Starting downloading: " + name;
