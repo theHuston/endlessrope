@@ -65,71 +65,87 @@ $(document).ready(function() {
 		label : "FEET/MINUTE"
 	});*/
 	
-	$(".gauge").knob({
+	$("#speed_gauge").knob({
 	    'min':0,
 	    'max':1500,
 	    'angleArc':180,
 	    'angleOffset':-90,
-	    'width':330,
+	    'width':360,
 	    'readOnly': true,
 	    'fgColor':'#006a9b',
-		'bgColor':'#FFF',
+		'bgColor':'transparent',
 	    'inputColor':'#000', 
 	    'font':'aviano_sansregular',
-	    'dynamicDraw': true,
-	    'displayInput':true
-	});
+	    'displayInput':false,
+	    'dynamicDraw': true
+	}); 
+	
+	$("#top_speed_gauge").knob({
+	    'min':0,
+	    'max':1500,
+	    'angleArc':180,
+	    'angleOffset':-90,
+	    'width':360,
 
-	$('#sixteenMile').click(function() {
+	    'readOnly': true,
+	    'fgColor':'#DDDDDD',
+		'bgColor':'#FFFFFF',
+	    'inputColor':'#000', 
+	    'font':'aviano_sansregular',
+	    'displayInput':false,
+	    'dynamicDraw': true
+	}); 
+
+	$('#sixteenMile').mousedown(function() {
 		mainDistance = 330;
 		$("#dropDistance").html("1/16 Mile");
 		tryAgain();
 	});
 	
-	$('#eightMile').click(function() {
+	$('#eightMile').mousedown(function() {
 		mainDistance = 660;
 		$("#dropDistance").html("1/8 Mile");
 		tryAgain();
 	});
 	
-	$('#quarterMile').click(function() {
+	$('#quarterMile').mousedown(function() {
 		mainDistance = 1320;
 		$("#dropDistance").html("1/4 Mile");
 		tryAgain();
 	});
 	
-	$('#halfMile').click(function() {
+	$('#halfMile').mousedown(function() {
 		mainDistance = 2640;
 		$("#dropDistance").html("1/2 Mile");
 		tryAgain();
 	});
 	
-	$('#oneMile').click(function() {
+	$('#oneMile').mousedown(function() {
 		mainDistance = 5280;
 		$("#dropDistance").html("1 Mile");
 		tryAgain();
 	});
 	
 
-	$('#stopReset').click(function() {
+	$('#stopReset').mousedown(function() {
 		tryAgain();
 		showMessage("Timer Reset","information");
 	});
 
 	
-	$('#lessDist').click(function() {
+	$('#lessDist').repeatedclick(function() {
 		if( mainDistance > (minDistance+1)){
 			mainDistance -= 10;
 		}
 		tryAgain();
 	});
 	
-	$('#moreDist').click(function() {
+	$('#moreDist').repeatedclick(function() {
 		mainDistance += 10;
 		tryAgain();
 	});
 	
-	$("#cancel").click(function(){
+	$("#cancel").mousedown(function(){
 		tryAgain();
 		$('#my_popup').popup("hide");
 		
@@ -139,8 +155,15 @@ $(document).ready(function() {
 	// setTimeout Example
 	(function loopingFunction() {
 	    updateInfo();
-	    setTimeout(loopingFunction, 250);
+	    setTimeout(loopingFunction, 50);
 	})();
+	
+	// setTimeout Example
+	(function loopingFunction2() {
+	    updateSpeed();
+	    setTimeout(loopingFunction2, 750);
+	})();
+	
 	//$('.gauge').val( currentSpeed.toFixed(0) ).trigger('change');
 	//speedInterval = setInterval(updateSpeed, 1000);
 });
@@ -163,6 +186,7 @@ socket.on('speed', function( _speed, _distance, _topSpeed, _avgSpeed, _time ){
 		if( running ){
 			if( distance.toFixed(0) <= 0 ){
 				finishLine();
+				finished = true;
 				running = false;
 				distance = 0;
 			}
@@ -172,7 +196,7 @@ socket.on('speed', function( _speed, _distance, _topSpeed, _avgSpeed, _time ){
 }); 
 
 function finishLine(){
-	finished = true;
+	
 	socket.emit('finishline' );
 	$("#timeTable #total_time").text(msToTime(time));
 	$("#timeTable #total_distance").text(mainDistance.toFixed(2));
@@ -183,33 +207,17 @@ function finishLine(){
 
 function updateSpeed() {
 	
-    $('.gauge').each(function() {
-       var $this = $(this);
-       var myVal = $this.attr("rel");
-       $this.knob({
-       });
-       $({
-          value: lastSpeed
-       }).animate({
-          value: currentSpeed.toFixed(0)
-       }, {
-          duration: 1000,
-          easing: 'linear',
-          step: function() {
-             $this.val(Math.ceil(this.value)).trigger('change');
-          }
-       });
-   });
-   
-   lastSpeed = currentSpeed.toFixed(0);
+    $("#theSpeed").text(currentSpeed.toFixed(0));
+    $("#avgSpeed").text(avgSpeed.toFixed(2));
+	$("#theTime").text(millisecondsToString(time));
 }
 
 function updateInfo(){
-	$('.gauge').val( currentSpeed.toFixed(0) ).trigger('change');
+	$('#speed_gauge').val( currentSpeed.toFixed(0) ).trigger('change');
+    $('#top_speed_gauge').val( topSpeed.toFixed(0) ).trigger('change');
+    
 	$("#distance").text(distance.toFixed(0));
 	$("#topSpeed").text(topSpeed.toFixed(2));
-	$("#avgSpeed").text(avgSpeed.toFixed(2));
-	$("#theTime").text( millisecondsToString( time ));
 }
 
 function showMessage(msg, type, layout) {

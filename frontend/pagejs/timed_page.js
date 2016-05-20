@@ -59,39 +59,85 @@ $(document).ready(function() {
 		label : "FEET/MINUTE"
 	});*/
 	
-	$(".gauge").knob({
+	$("#speed_gauge").knob({
 	    'min':0,
 	    'max':1500,
 	    'angleArc':180,
 	    'angleOffset':-90,
-	    'width':330,
+	    'width':360,
 	    'readOnly': true,
 	    'fgColor':'#006a9b',
-		'bgColor':'#FFF',
-	    'inputColor':'#000',
-	    'dynamicDraw': true, 
+		'bgColor':'transparent',
+	    'inputColor':'#000', 
 	    'font':'aviano_sansregular',
-	    'displayInput':true
+	    'displayInput':false,
+	    'dynamicDraw': true
+	}); 
+	
+	$("#top_speed_gauge").knob({
+	    'min':0,
+	    'max':1500,
+	    'angleArc':180,
+	    'angleOffset':-90,
+	    'width':360,
+
+	    'readOnly': true,
+	    'fgColor':'#DDDDDD',
+		'bgColor':'#FFFFFF',
+	    'inputColor':'#000', 
+	    'font':'aviano_sansregular',
+	    'displayInput':false,
+	    'dynamicDraw': true
+	}); 
+	
+	$('#2min').mousedown(function() {
+		defaultTime = 120000;
+		$("#dropTime").html("2 Min");
+		tryAgain();
+	});
+	
+	$('#5min').click(function() {
+		defaultTime = 300000;
+		$("#dropTime").html("5 Min");
+		tryAgain();
+	});
+	
+	$('#10min').mousedown(function() {
+		defaultTime = 600000;
+		$("#dropTime").html("10 Min");
+		tryAgain();
+	});
+	
+	$('#20min').mousedown(function() {
+		defaultTime = 1200000;
+		$("#dropTime").html("20 Min");
+		tryAgain();
+	});
+	
+	$('#1hour').mousedown(function() {
+		defaultTime = 3599999;
+		$("#dropTime").html("1 Hour");
+		tryAgain();
 	});
 
-	$('#stopReset').click(function() {
+	$('#stopReset').mousedown(function() {
 		tryAgain();
 		showMessage("Timer Reset","information");
 	});
 
-	$('#lessTime').click(function() {
-		defaultTime -= 10000;
-		tryAgain();
-
+	$('#lessTime').repeatedclick(function() {
+		if( defaultTime > 10000 ){
+			defaultTime -= 10000;
+			tryAgain();
+		}
 	});
 
-	$('#moreTime').click(function() {
+	$('#moreTime').repeatedclick(function() {
 		defaultTime += 10000;
 		tryAgain();
-
 	});
 	
-	$("#cancel").click(function(){
+	$("#cancel").mousedown(function(){
 		$('#my_popup').popup("hide");
 		tryAgain();
 		showMessage("Timer Reset","information");
@@ -100,8 +146,15 @@ $(document).ready(function() {
 	// setTimeout Example
 	(function loopingFunction() {
 	    updateInfo();
-	    setTimeout(loopingFunction, 250);
+	    setTimeout(loopingFunction, 50);
 	})();
+	
+	// setTimeout Example
+	(function loopingFunction2() {
+	    updateSpeed();
+	    setTimeout(loopingFunction2, 750);
+	})();
+	
 	//updateInfo();
 	//$('.gauge').val( currentSpeed.toFixed(0) ).trigger('change');
 	//speedInterval = setInterval(updateSpeed, 1000);
@@ -110,33 +163,18 @@ $(document).ready(function() {
 
 function updateSpeed() {
 	
-    $('.gauge').each(function() {
-       var $this = $(this);
-       var myVal = $this.attr("rel");
-       $this.knob({
-       });
-       $({
-          value: lastSpeed
-       }).animate({
-          value: currentSpeed.toFixed(0)
-       }, {
-          duration: 1000,
-          easing: 'linear',
-          step: function() {
-             $this.val(Math.ceil(this.value)).trigger('change');
-          }
-       });
-   });
-   
-   lastSpeed = currentSpeed.toFixed(0);
+    $("#theSpeed").text(currentSpeed.toFixed(0));
+    $("#avgSpeed").text(avgSpeed.toFixed(2));
+	$("#theTime").text(millisecondsToString(time));
 }
 
 function updateInfo() {
-	$('.gauge').val( currentSpeed.toFixed(0) ).trigger('change');
+	$('#speed_gauge').val( currentSpeed.toFixed(0) ).trigger('change');
+    $('#top_speed_gauge').val( topSpeed.toFixed(0) ).trigger('change');
+    
 	$("#topSpeed").text(topSpeed.toFixed(2));
-	$("#avgSpeed").text(avgSpeed.toFixed(2));
-	$("#distance").text(distance.toFixed(2));
-	$("#theTime").text(millisecondsToString(time));
+	$("#distance").text(distance.toFixed(1));
+
 }
 
 

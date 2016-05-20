@@ -39,45 +39,93 @@ $(document).ready(function() {
 		tryAgain();
 	}
 	
-	/*$(".gauge").knob({
+	$("#speed_gauge").knob({
 	    'min':0,
 	    'max':1500,
 	    'angleArc':180,
 	    'angleOffset':-90,
-	    'width':330,
+	    'width':360,
 	    'readOnly': true,
 	    'fgColor':'#006a9b',
-		'bgColor':'#FFF',
+		'bgColor':'transparent',
 	    'inputColor':'#000', 
-	    'font':'aviano_sansregular'//,
-	    //'displayInput':true,
-	    //'dynamicDraw': true
-	}); */
+	    'font':'aviano_sansregular',
+	    'displayInput':false,
+	    'dynamicDraw': true
+	}); 
 	
-	
+	$("#top_speed_gauge").knob({
+	    'min':0,
+	    'max':1500,
+	    'angleArc':180,
+	    'angleOffset':-90,
+	    'width':360,
 
+	    'readOnly': true,
+	    'fgColor':'#DDDDDD',
+		'bgColor':'#FFFFFF',
+	    'inputColor':'#000', 
+	    'font':'aviano_sansregular',
+	    'displayInput':false,
+	    'dynamicDraw': true
+	}); 
+	
+	
+	/*
 	speed_gauge = new JustGage({
 		id : "speed_gauge",
 		value : currentSpeed,
 		min : 0,
 		max : MAX_SPEED,
-		levelColors : ["#2e74a5", "#6bbcea", "#00FFFF", "#FF0000"],
+		levelColors : ["#2e74a5", "#2e74a5", "#2e74a5", "#2e74a5", "#2e74a5", "#FF0000"],
 		relativeGaugeSize : true,
 		title : " ",
 		valueFontColor : "#5D5D5D",
 		startAnimationTime : 0,
-		label : "FEET/MINUTE"
+		label : "FT/MIN",
+		titleFontColor: "#5b5b5b",
+        titleFontFamily: "aviano_sansregular",
+        titlePosition: "below",
+        valueFontColor: "#000000",
+        valueFontFamily: "aviano_sansregular"
 	});
+	
+	top_speed_gauge = new JustGage({
+		id : "top_speed_gauge",
+		value : topSpeed,
+		min : 0,
+		max : MAX_SPEED,
+		levelColors : ["#FFFFFF"],
+		relativeGaugeSize : true,
+		title : " ",
+		valueFontColor : "#5D5D5D",
+		hideInnerShadow: true,
+        startAnimationTime: 1,
+        startAnimationType: "linear",
+        refreshAnimationTime: 1,
+        refreshAnimationType: "linear",
+		label : "",
+		hideMinMax : true,
+		gaugeWidthScale : 0.01,
+		textRenderer: customValue,
+		pointer: true,
+        pointerOptions: {
+          toplength: 6,
+          bottomlength: -12,
+          bottomwidth: 5,
+          color: '#2e74a5'
+        }
+	}); */
 
 	
 
-	$("#stopReset").click(function() {
+	$("#stopReset").mousedown(function() {
 		socket.emit('on your mark', _activity);
 		showMessage("Freeclimb reset.");
 	});
 	
 	ready = true;
-	//updateInfo();
+	updateInfo();
 	//$('.gauge').val( currentSpeed.toFixed(0) ).trigger('change');
 	//speedInterval = setInterval(updateSpeed, 1000);
 	//updateInterval = setInterval(updateInfo, 250);
@@ -85,14 +133,24 @@ $(document).ready(function() {
 	// setTimeout Example
 	(function loopingFunction() {
 	    updateInfo();
-	    setTimeout(loopingFunction, 250);
-	})();
+	    setTimeout(loopingFunction, 150);
+	})(); 
+	
+	// setTimeout Example
+	(function loopingFunction2() {
+	    updateSpeed();
+	    setTimeout(loopingFunction2, 1000);
+	})(); 
 
 });
 
+function customValue(val){
+	return "";
+}
+
 function updateSpeed() {
 	
-    $('.gauge').each(function() {
+    /*$('#speed_gauge').each(function() {
        var $this = $(this);
        var myVal = $this.attr("rel");
        $this.knob({
@@ -110,17 +168,21 @@ function updateSpeed() {
        });
    });
    
-   lastSpeed = currentSpeed.toFixed(0);
+   lastSpeed = currentSpeed.toFixed(0);*/
+   $("#theSpeed").text(currentSpeed.toFixed(0));
+   $("#avgSpeed").text(avgSpeed.toFixed(2));
+   $("#theTime").text(millisecondsToString(time));
 }
 
 function updateInfo() {
-	speed_gauge.refresh(currentSpeed.toFixed(0));
-	//$('.gauge').val( currentSpeed.toFixed(0) ).trigger('change');
-         
+	//speed_gauge.refresh(currentSpeed.toFixed(0));
+	//top_speed_gauge.refresh(topSpeed.toFixed(0));
+	$('#speed_gauge').val( currentSpeed.toFixed(0) ).trigger('change');
+    $('#top_speed_gauge').val( topSpeed.toFixed(0) ).trigger('change');
+    
+   
 	$("#distance").text(distance.toFixed(0));
 	$("#topSpeed").text(topSpeed.toFixed(2));
-	$("#avgSpeed").text(avgSpeed.toFixed(2));
-	$("#theTime").text(millisecondsToString(time));
 }
 
 

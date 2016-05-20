@@ -3,31 +3,36 @@ var socket = io();
 var version = "";
 var ipAddress;
 var qrcode;
+var updating = false;
 
 $(document).ready(function() {
 	socket.emit('setup init', " ");
 	
-	$("#newbutton").click(function(){
+	$("#newbutton").mousedown(function(){
 		console.log("newbutton pressed.");
 		$('#my_popup').popup("show");
 	});
 	
-	$("#updateCheck").click(function(){
+	$("#updateCheck").mousedown(function(){
 		console.log("updateCheck pressed.");
-		showMessage("Checking for Updates.","alert");
-		socket.emit('check for updates', '');
+		//showMessage("Checking for Updates.","alert");
+		//if( updating == false ){
+			socket.emit('check for updates', '');
+			//updating = true;
+		//}
+		
 	});
 	
-	$("#cancel").click(function(){
+	$("#cancel").mousedown(function(){
 		$('#my_popup').popup("hide");
 	});
 	
-	$("#shutdown").click(function(){
+	$("#shutdown").mousedown(function(){
 		$('#my_popup').popup("hide");
 		$('#shutting_down').popup("show");
 		setTimeout(shutItDown,2000);
 	});
-	
+	/*
 	qrcode = new QRCode("theqr", {
 	    text: ipAddress+":8080",
 	    width: 128,
@@ -35,7 +40,7 @@ $(document).ready(function() {
 	    colorDark : "#2e74a5",
 	    colorLight : "#ffffff",
 	    correctLevel : QRCode.CorrectLevel.H
-	});
+	}); */
 	
 	// Initialize the plugin
     $('#my_popup').popup({
@@ -69,8 +74,7 @@ socket.on('init', function( _ipAddress, _version ){
 	ipAddress = _ipAddress;
 	$("#ipaddress").text( ipAddress );
 	
-	//qrcode.clear(); // clear the code.
-	qrcode.makeCode( ipAddress+":8080" ); // make another code.
+	//qrcode.makeCode( ipAddress+":8080" ); // make another code.
 	
 	console.log( ipAddress );
 	
