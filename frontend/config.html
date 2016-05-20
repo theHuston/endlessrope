@@ -57,16 +57,16 @@
             	<!-- InstanceBeginEditable name="menu" -->
 
           				<li class="">
-                            <a draggable='false' href="index.html"><img draggable='false' src="img/freeclclimb.png"><span>Free Climb</span></a>
+                            <a class="btn" draggable='false' href="index.html"><img draggable='false' src="img/freeclclimb.png"><span>Free Climb</span></a>
                         </li>
                         <li class="">
-                            <a draggable='false' href="timed.html"><img draggable='false' src="img/charts.png"><span>Timed Climb</span></a>
+                            <a class="btn" draggable='false' href="timed.html"><img draggable='false' src="img/charts.png"><span>Timed Climb</span></a>
                         </li>
                         <li class="">
-                            <a draggable='false' href="laps.html"><img draggable='false' src="img/laps.png"><span>Distance Climb</span></a>
+                            <a class="btn" draggable='false' href="laps.html"><img draggable='false' src="img/laps.png"><span>Distance Climb</span></a>
                         </li>
                         <li class="active">
-                            <a draggable='false' href="config.html"><img draggable='false' src="img/config.png"><span>Configure</span></a>
+                            <a class="btn" draggable='false' href="config.html"><img draggable='false' src="img/config.png"><span>Configure</span></a>
                         </li>
                         <!--<li class="">
                              <a href="help.html"><img draggable='false' src="img/help.png"><span>Help</span></a>
@@ -108,12 +108,12 @@
 	                            		</td>
 	                            		<td id="ipaddress">000.000.0.00</td>
 	                            	</tr>
-	                            	<tr>
+	                            	<!-- <tr>
 	                            		<td>QR Code</td>
 	                            		<td><div id="theqr"></div>
 	                            			
 	                            		</td>
-	                            	</tr>
+	                            	</tr> -->
 	                            	<tr>
 	                            		<td>
 	                            			SHUTDOWN
@@ -186,11 +186,11 @@
         
         <!-- Menu Toggle Script -->
 		<script>
-        $(".navbar-toggle").click(function(e) {
+        $(".navbar-toggle").mousedown(function(e) {
             e.preventDefault();
             $("#wrapper").toggleClass("toggled");
         });
-		$("#wrapper.toggled").click(function(e) {
+		$("#wrapper.toggled").mousedown(function(e) {
             e.preventDefault();
             $("#wrapper").toggleClass("toggled");
         });

@@ -73,16 +73,16 @@
             	<!-- InstanceBeginEditable name="menu" -->
 
 					<li>
-						<a draggable='false' href="index.html"><img draggable='false' src="img/freeclclimb.png"><span>Free Climb</span></a>
+						<a class="btn" draggable='false' href="index.html"><img draggable='false' src="img/freeclclimb.png"><span>Free Climb</span></a>
 					</li>
 					<li class="active">
-						<a draggable='false' href="timed.html"><img draggable='false' src="img/charts.png"><span>Timed Climb</span></a>
+						<a class="btn" draggable='false' href="timed.html"><img draggable='false' src="img/charts.png"><span>Timed Climb</span></a>
 					</li>
 					<li class="">
-						<a draggable='false' href="laps.html"><img draggable='false' src="img/laps.png"><span>Distance Climb</span></a>
+						<a class="btn" draggable='false' href="laps.html"><img draggable='false' src="img/laps.png"><span>Distance Climb</span></a>
 					</li>
 					<li class="">
-						<a draggable='false' href="config.html"><img draggable='false' src="img/config.png"><span>Configure</span></a>
+						<a class="btn" draggable='false' href="config.html"><img draggable='false' src="img/config.png"><span>Configure</span></a>
 					</li>
 					<!-- <li class="">
 					<a href="../help.html"><img src="../img/help.png"><span>Help</span></a>
@@ -105,17 +105,31 @@
 								<img draggable='false' src="img/charts.png">
 							</button>
 							<h1 class="page-header">Timed Climb</h1>
-							<div id="buttons" class="btn-group btn-group-lg" role="group" >
-
-								<button id="moreTime" type="button" class="btn btn-default">
+							<div id="buttons" draggable='false' class="btn-group btn-group-lg" role="group" >
+								<div class="btn-group btn-group-lg" role="group">
+                                    <button draggable='false' id="dropTime" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                      2 Min
+                                      <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                      <li><a draggable='false' href="#"  id="2min" type="button">2 Min</a></li>
+                                      <li><a draggable='false' href="#"  id="5min" type="button" >5 Min</a></li>
+                                      <li><a draggable='false' href="#" id="10min" type="button" >10 Min</a></li>
+                                      <li><a draggable='false' href="#" id="20min" type="button" >20 Min</a></li>
+                                      <li><a draggable='false' href="#" id="1hour" type="button" >1 Hour</a></li>
+                                    </ul>
+                                  </div>
+								<button draggable='false' id="moreTime" type="button" class="btn btn-default">
 									<span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
 								</button>
-								<button id="lessTime" type="button" class="btn btn-default">
+								<button draggable='false' id="lessTime" type="button" class="btn btn-default">
 									<span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
 								</button>
-								<button id="stopReset" type="button" class="btn btn-default">
+                                
+								<button draggable='false' id="stopReset" type="button" class="btn btn-default">
 									<span class="glyphicon glyphicon-repeat" aria-hidden="true"></span>
 								</button>
+                                
 							</div>
 							<div class="row">
 								<div class="col-xs-6 placeholders">
@@ -140,8 +154,13 @@
 									<h4>SPEED</h4>
 									<div id="tachometer" class="row">
 										<div class="col-xs-12">
-											<input id="speed_gauge" class="gauge">
-											<span class="text-muted">FT/MIN</span>
+											<!--<input id="top_speed_gauge" data-bgColor="#fff" class="gauge"> -->
+											<div class="gauge"><div id="top_speed_gauge"></div></div>
+											<div class="gauge">
+												<div id="speed_gauge"></div>
+												<h2 id="theSpeed"></h2>
+												<div id="minMax"><span class="text-muted pull-left">0</span> <span class="text-muted pull-right">1500</span></div>
+                                            	<div id="label"><span class="text-muted">FT/MIN</span></div></div>
 										</div>
 									</div>
 								</div>
@@ -186,7 +205,7 @@
         <!--<link rel="stylesheet" href="../css/debug-windowsize.css">
         <script src="../js/window-size.js"></script>-->
         
-        <script type="text/javascript" src="js/textFit.min.js"></script>
+        <script type="text/javascript" src="js/jquery.repeatedclick.min.js"></script>
 		<script type="text/javascript" src="js/fastclick.js"></script>
         <script type="text/javascript" src="js/jquery.popupoverlay.js"></script>
         
@@ -209,11 +228,11 @@
         
         <!-- Menu Toggle Script -->
 		<script>
-        $(".navbar-toggle").click(function(e) {
+        $(".navbar-toggle").mousedown(function(e) {
             e.preventDefault();
             $("#wrapper").toggleClass("toggled");
         });
-		$("#wrapper.toggled").click(function(e) {
+		$("#wrapper.toggled").mousedown(function(e) {
             e.preventDefault();
             $("#wrapper").toggleClass("toggled");
         });
