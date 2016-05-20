@@ -135,6 +135,7 @@ io.on('connection', function(socket) {
 	
 	socket.on('check for updates', function(){
 		// Start checking
+		console.log( "Checking for updates.");
 		autoupdater.fire('check');
 	});
 
@@ -153,6 +154,16 @@ io.on('connection', function(socket) {
 		console.log("Closing");
 
 		exec("sudo poweroff", function(error, stdout, stderr) {
+			if (error !== null) {
+				console.log("exec errror: " + error);
+			}
+		});
+	});
+	
+	socket.on('please reboot', function(msg) {
+		console.log("Restarting machine");
+
+		exec("sudo reboot", function(error, stdout, stderr) {
 			if (error !== null) {
 				console.log("exec errror: " + error);
 			}
@@ -330,7 +341,7 @@ autoupdater.on('check.up-to-date', function(v) {
 autoupdater.on('check.out-dated', function(v_old, v) {
 	message = "Your version is outdated. " + v_old + " of " + v;
 	console.warn( message );
-	io.emit('showMessage', message, "warning" );
+	io.emit('showMessage', message, "warning", "topCenter", null );
 	autoupdater.fire('download-update');
 	// If autoupdate: false, you'll have to do this manually.
 	// Maybe ask if the'd like to download the update.
@@ -338,7 +349,7 @@ autoupdater.on('check.out-dated', function(v_old, v) {
 autoupdater.on('update.downloaded', function() {
 	message = "Update downloaded and ready for install";
 	console.log( message );
-	io.emit('showMessage', message,"alert" );
+	//io.emit('showMessage', message,"alert" );
 	autoupdater.fire('extract');
 	// If autoupdate: false, you'll have to do this manually.
 });
@@ -359,7 +370,7 @@ autoupdater.on('update.extracted', function() {
 autoupdater.on('download.start', function(name) {
 	message = "Starting downloading: " + name;
 	console.log( message );
-	io.emit('showMessage', message, "alert", 10000 );
+	io.emit('showMessage', message, "alert", 12000 );
 });
 autoupdater.on('download.progress', function(name, perc) {
 	process.stdout.write("Downloading " + perc + "%");
