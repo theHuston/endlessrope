@@ -252,6 +252,7 @@ io.on('connection', function(socket) {
 		rebootTheMachine();
 	});
 	
+	// -- START UPDATE --
 	socket.on('start update', function(){
 		autoupdater.fire('download-update');
 	});
@@ -441,7 +442,7 @@ autoupdater.on('check.out-dated', function(v_old, v) {
 autoupdater.on('update.downloaded', function() {
 	message = "Update downloaded and ready for install";
 	console.log(message);
-	//io.emit('showMessage', message,"alert" );
+	io.emit('showMessage', message,"alert" );
 	autoupdater.fire('extract');
 	// If autoupdate: false, you'll have to do this manually.
 });
