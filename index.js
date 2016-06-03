@@ -430,7 +430,7 @@ autoupdater.on('check.up-to-date', function(v) {
 	io.emit('showMessage', message, "success", "topCenter", 5000);
 });
 autoupdater.on('check.out-dated', function(v_old, v) {
-	message = "Your version is outdated. " + v_old + " of " + v;
+	message = "<strong>Your version is outdated.</strong> <br>" + v_old + " of " + v;
 	console.warn(message);
 	io.emit('updateNeeded', message );
 	//io.emit('showMessage', message, "warning", "topCenter", null);
