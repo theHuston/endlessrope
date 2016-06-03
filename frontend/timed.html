@@ -23,7 +23,6 @@
     </head>
 	 
     <body>
-    
     <div id="wrapper">
     
     <!-- InstanceBeginEditable name="popup" -->
@@ -72,17 +71,17 @@
 				</li>
             	<!-- InstanceBeginEditable name="menu" -->
 
-					<li>
-						<a class="btn" draggable='false' href="index.html"><img draggable='false' src="img/freeclclimb.png"><span>Free Climb</span></a>
+					<li class="">
+						<a class="btn" draggable='false' id="freerunButt" ><img draggable='false' src="img/freeclclimb.png"><span>Free Climb</span></a>
 					</li>
 					<li class="active">
-						<a class="btn" draggable='false' href="timed.html"><img draggable='false' src="img/charts.png"><span>Timed Climb</span></a>
+						<a class="btn" draggable='false' id="timedButt" ><img draggable='false' src="img/charts.png"><span>Timed Climb</span></a>
 					</li>
 					<li class="">
-						<a class="btn" draggable='false' href="laps.html"><img draggable='false' src="img/laps.png"><span>Distance Climb</span></a>
+						<a class="btn" draggable='false' id="distanceButt" ><img draggable='false' src="img/laps.png"><span>Distance Climb</span></a>
 					</li>
 					<li class="">
-						<a class="btn" draggable='false' href="config.html"><img draggable='false' src="img/config.png"><span>Configure</span></a>
+						<a class="btn" draggable='false' id="configButt" ><img draggable='false' src="img/config.png"><span>Configure</span></a>
 					</li>
 					<!-- <li class="">
 					<a href="../help.html"><img src="../img/help.png"><span>Help</span></a>
@@ -194,7 +193,7 @@
 
     </div>
     <!-- /#wrapper -->
-
+	<div id="reveal" style="position: absolute; width: 100%; height: 100%; background-color: white; top: 0; left: 0;"></div>
 
         <!-- Bootstrap core JavaScript
         ================================================== -->
