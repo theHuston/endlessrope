@@ -225,30 +225,31 @@ function shutItDown() {
 
 function setConnectionStatus( _connected ){
 	connected = _connected;
-
-	if (connected) {
+	
+	if ( connected = true ) {
+		var status = ssid + " | " + ipAddress;
 		$("#status").text("Connected");
 		$("#wifiStatus").addClass("alert-success");
+		$("#status_info").text(status);
 	} else {
 		$("#status").text("Not Connected");
 		$("#wifiStatus").addClass("alert-warning");
+		$("#status_info").text("");
 	}
+	
 }
 
 
 socket.on('init', function(_connected, _ipAddress, _ssid, _version) {
-
+	
 	setConnectionStatus( _connected );
 
 	version = _version;
 	$("#version").text(version);
 
 	ipAddress = _ipAddress;
-	$("#ipAddress").text(ipAddress);
-	
 	ssid = _ssid;
-	$("#ssid").text( ssid );
-
+	
 	//qrcode.makeCode( ipAddress+":8080" ); // make another code.
 
 	console.log(ipAddress);
@@ -276,7 +277,6 @@ socket.on('init', function(_connected, _ipAddress, _ssid, _version) {
 	buildWirelessList(wirelessList);
 
 }).on('connectedWifiSuccess', function( _ip_address ){
-	
 	ipAddress = _ip_address;
 	$("#ipaddress").text(_ip_address);
 	setConnectionStatus( true );
@@ -288,6 +288,7 @@ socket.on('init', function(_connected, _ipAddress, _ssid, _version) {
 	
 	message = "<strong>Connection Failed</strong><br>"+error;
 	console.log(message);
+	
 	showMessage(message, "warning", "center", 8000 );
 	connectingProgress.close();
 	connectingNote.close();
