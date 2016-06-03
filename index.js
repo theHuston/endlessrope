@@ -55,8 +55,12 @@ function resetState(activity) {
 	_isStarted = false;
 
 	//_currentActivity = activity||"FREECLIMB";
-	if(activity == "")
-	theDistance = 0;
+	if(activity == "DISTANCECLIMB"){
+		theDistance = _climbingDistance;
+	} else {
+		theDistance = 0;
+	}
+	
 	//stopTesting();
 };
 
@@ -442,7 +446,7 @@ autoupdater.on('check.out-dated', function(v_old, v) {
 autoupdater.on('update.downloaded', function() {
 	message = "Update downloaded and ready for install";
 	console.log(message);
-	io.emit('showMessage', message,"alert" );
+	io.emit('showMessage', message,"alert","center" );
 	autoupdater.fire('extract');
 	// If autoupdate: false, you'll have to do this manually.
 });
@@ -458,7 +462,7 @@ autoupdater.on('update.extracted', function() {
 	//io.emit('showMessage', message, "success" );
 	console.log(message);
 	console.warn("RESTART THE MACHINE!");
-	io.emit('showMessage', message, "success", null);
+	io.emit('showMessage', message, "success", "center", null);
 	setTimeout(rebootTheMachine, 2000);
 });
 autoupdater.on('download.start', function(name) {
@@ -472,7 +476,7 @@ autoupdater.on('download.progress', function(name, perc) {
 autoupdater.on('download.end', function(name) {
 	message = "Downloaded " + name;
 	console.log(message);
-	io.emit('showMessage', message, "alert" );
+	//io.emit('showMessage', message, "alert" );
 });
 autoupdater.on('download.error', function(err) {
 	message = "Error when downloading: " + err;
