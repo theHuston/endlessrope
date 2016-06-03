@@ -32,31 +32,37 @@ function tryAgain() {
 
 $(document).ready(function() {
 	
-	$("#reveal").addClass("loaded");
+	
 	
 	$(".sidebar-nav A").mousedown(function(e) {
 		e.preventDefault();
-		$("#wrapper").removeClass("toggled");
-		$("#reveal").removeClass("loaded");
+		
 		
 		switch ( this.id ) {
 		case "freerunButt":
+			$("#pageIcon").attr("src", "img/freeclclimb.png");
 			setTimeout(function(){ window.location.href = "/index.html"; },500);
 			break;
 		case "timedButt":
+			$("#pageIcon").attr("src", "img/charts.png");
 			setTimeout(function(){ window.location.href = "/timed.html"; },500);
 			break;
 
 		case "distanceButt":
+			$("#pageIcon").attr("src", "img/laps.png");
 			setTimeout(function(){ window.location.href = "/laps.html"; },500);
 			break;
 			
 		case "configButt":
+			$("#pageIcon").attr("src", "img/config.png");
 			setTimeout(function(){ window.location.href = "/config.html"; },500);
 			break;
 
 		default:
 		}
+		
+		$("#wrapper").removeClass("toggled");
+		$("#reveal").removeClass("loaded");
 		
 	});
 	
@@ -167,6 +173,7 @@ $(document).ready(function() {
 	    updateSpeed();
 	    setTimeout(loopingFunction2, 1000);
 	})(); 
+	
 
 });
 
@@ -211,8 +218,9 @@ function updateInfo() {
 	$("#topSpeed").text(topSpeed.toFixed(2));
 }
 
-
-socket.on('speed', function(_speed, _distance, _topSpeed, _avgSpeed, _time) {
+socket.on('init', function(){
+	$("#reveal").addClass("loaded");
+}).on('speed', function(_speed, _distance, _topSpeed, _avgSpeed, _time) {
 
 	currentSpeed = _speed;
 	distance = _distance;

@@ -22,7 +22,7 @@ var speed_gauge;
 // TAKE OFF
 socket.on('gun shot', function(_speed, _distance) {
 	finished = false;
-	showMessage("<h2>GO!</h2>","success", "topCenter", 500);
+	showMessage("<h2>GO!</h2>","success", "topCenter", 160);
 });
 
 function tryAgain() {
@@ -33,31 +33,37 @@ function tryAgain() {
 
 $(document).ready(function() {
 	
-	$("#reveal").addClass("loaded");
+	
 	
 	$(".sidebar-nav A").mousedown(function(e) {
 		e.preventDefault();
-		$("#wrapper").removeClass("toggled");
-		$("#reveal").removeClass("loaded");
+		
 		
 		switch ( this.id ) {
 		case "freerunButt":
+			$("#pageIcon").attr("src", "img/freeclclimb.png");
 			setTimeout(function(){ window.location.href = "/index.html"; },500);
 			break;
 		case "timedButt":
+			$("#pageIcon").attr("src", "img/charts.png");
 			setTimeout(function(){ window.location.href = "/timed.html"; },500);
 			break;
 
 		case "distanceButt":
+			$("#pageIcon").attr("src", "img/laps.png");
 			setTimeout(function(){ window.location.href = "/laps.html"; },500);
 			break;
 			
 		case "configButt":
+			$("#pageIcon").attr("src", "img/config.png");
 			setTimeout(function(){ window.location.href = "/config.html"; },500);
 			break;
 
 		default:
 		}
+		
+		$("#wrapper").removeClass("toggled");
+		$("#reveal").removeClass("loaded");
 		
 	});
 
@@ -124,7 +130,7 @@ $(document).ready(function() {
 		tryAgain();
 	});
 	
-	$('#5min').click(function() {
+	$('#5min').mousedown(function() {
 		defaultTime = 300000;
 		$("#dropTime").html("5 Min");
 		tryAgain();
@@ -153,15 +159,15 @@ $(document).ready(function() {
 		showMessage("Timer Reset","information");
 	});
 
-	$('#lessTime').repeatedclick(function() {
-		if( defaultTime > 10000 ){
-			defaultTime -= 10000;
+	$('#lessTime').mousedown(function() {
+		if( defaultTime > 60000 ){
+			defaultTime -= 60000;
 			tryAgain();
 		}
 	});
 
-	$('#moreTime').repeatedclick(function() {
-		defaultTime += 10000;
+	$('#moreTime').mousedown(function() {
+		defaultTime += 60000;
 		tryAgain();
 	});
 	
@@ -186,7 +192,7 @@ $(document).ready(function() {
 	//updateInfo();
 	//$('.gauge').val( currentSpeed.toFixed(0) ).trigger('change');
 	//speedInterval = setInterval(updateSpeed, 1000);
-
+	
 });
 
 function updateSpeed() {
@@ -205,8 +211,9 @@ function updateInfo() {
 
 }
 
-
-socket.on('speed', function(_speed, _distance, _topSpeed, _avgSpeed, _time) {
+socket.on('init', function(){
+	$("#reveal").addClass("loaded");
+}).on('speed', function(_speed, _distance, _topSpeed, _avgSpeed, _time) {
 
 	currentSpeed = _speed;
 	distance = _distance;

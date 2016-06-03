@@ -27,31 +27,37 @@ var wirelessListButton = $("#wirelessListButton");
 $(document).ready(function() {
 	//socket.emit('setup init', " ");
 	
-	$("#reveal").addClass("loaded");
+	
 	
 	$(".sidebar-nav A").mousedown(function(e) {
 		e.preventDefault();
-		$("#wrapper").removeClass("toggled");
-		$("#reveal").removeClass("loaded");
+		
 		
 		switch ( this.id ) {
 		case "freerunButt":
+			$("#pageIcon").attr("src", "img/freeclclimb.png");
 			setTimeout(function(){ window.location.href = "/index.html"; },500);
 			break;
 		case "timedButt":
+			$("#pageIcon").attr("src", "img/charts.png");
 			setTimeout(function(){ window.location.href = "/timed.html"; },500);
 			break;
 
 		case "distanceButt":
+			$("#pageIcon").attr("src", "img/laps.png");
 			setTimeout(function(){ window.location.href = "/laps.html"; },500);
 			break;
 			
 		case "configButt":
+			$("#pageIcon").attr("src", "img/config.png");
 			setTimeout(function(){ window.location.href = "/config.html"; },500);
 			break;
 
 		default:
 		}
+		
+		$("#wrapper").removeClass("toggled");
+		$("#reveal").removeClass("loaded");
 		
 	});
 
@@ -104,7 +110,9 @@ $(document).ready(function() {
 	 });
 
 	 */
-
+	
+	
+	
 });
 
 function connectToNetwork(_index) {
@@ -267,8 +275,6 @@ function setConnectionStatus( _connected ){
 
 
 socket.on('init', function(_connected, _ipAddress, _ssid, _version) {
-	
-	
 
 	version = _version;
 	$("#version").text(version);
@@ -280,6 +286,8 @@ socket.on('init', function(_connected, _ipAddress, _ssid, _version) {
 	//qrcode.makeCode( ipAddress+":8080" ); // make another code.
 
 	console.log(ipAddress);
+	
+	$("#reveal").addClass("loaded");
 
 }).on('showMessage', function(_message, _type, _layout, _timeout) {
 	showMessage(_message, _type, _layout, _timeout);

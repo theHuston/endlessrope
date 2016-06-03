@@ -35,31 +35,35 @@ function tryAgain(){
 
 $(document).ready(function() {
 	
-	$("#reveal").addClass("loaded");
-	
 	$(".sidebar-nav A").mousedown(function(e) {
 		e.preventDefault();
-		$("#wrapper").removeClass("toggled");
-		$("#reveal").removeClass("loaded");
+		
 		
 		switch ( this.id ) {
 		case "freerunButt":
+			$("#pageIcon").attr("src", "img/freeclclimb.png");
 			setTimeout(function(){ window.location.href = "/index.html"; },500);
 			break;
 		case "timedButt":
+			$("#pageIcon").attr("src", "img/charts.png");
 			setTimeout(function(){ window.location.href = "/timed.html"; },500);
 			break;
 
 		case "distanceButt":
+			$("#pageIcon").attr("src", "img/laps.png");
 			setTimeout(function(){ window.location.href = "/laps.html"; },500);
 			break;
 			
 		case "configButt":
+			$("#pageIcon").attr("src", "img/config.png");
 			setTimeout(function(){ window.location.href = "/config.html"; },500);
 			break;
 
 		default:
 		}
+		
+		$("#wrapper").removeClass("toggled");
+		$("#reveal").removeClass("loaded");
 		
 	});
 	
@@ -161,15 +165,15 @@ $(document).ready(function() {
 	});
 
 	
-	$('#lessDist').repeatedclick(function() {
-		if( mainDistance > (minDistance+1)){
-			mainDistance -= 10;
+	$('#lessDist').mousedown(function() {
+		if( mainDistance > 330){
+			mainDistance -= 330;
 		}
 		tryAgain();
 	});
 	
-	$('#moreDist').repeatedclick(function() {
-		mainDistance += 10;
+	$('#moreDist').mousedown(function() {
+		mainDistance += 330;
 		tryAgain();
 	});
 	
@@ -194,16 +198,20 @@ $(document).ready(function() {
 	
 	//$('.gauge').val( currentSpeed.toFixed(0) ).trigger('change');
 	//speedInterval = setInterval(updateSpeed, 1000);
+	
+	
+	
 });
 
 // TAKE OFF
 socket.on('gun shot', function( ){
 	running = true;
-	showMessage("<h2>GO!</h2>","success", "topCenter", 500);
+	showMessage("<h2>GO!</h2>","success", "topCenter", 160);
 });
 
-
-socket.on('speed', function( _speed, _distance, _topSpeed, _avgSpeed, _time ){
+socket.on('init', function(){
+	$("#reveal").addClass("loaded");
+}).on('speed', function( _speed, _distance, _topSpeed, _avgSpeed, _time ){
 	
     currentSpeed = _speed;
     topSpeed = _topSpeed;
