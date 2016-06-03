@@ -86,13 +86,27 @@ h5 {
   margin-bottom: 4px;
   color: #2975A6;
   font-size: 18px;
-  height: 10px !important;
+  display: block; 
+  overflow:visible;
+  /*height: 10px !important;*/
   font-weight: bold;
   line-height: 1;
+}
+.btn-primary .glyphicon {
+	color:#FFFFFF;
+}
+.alert{
+	margin-bottom: 0px;
+}
+.progress {
+	margin-bottom: 0px;
 }
 .btn {
   cursor: none;
   outline: none;
+}
+.glyphicon {
+	overflow: hidden;
 }
 IMG {
   cursor: none;
