@@ -32,13 +32,34 @@ function tryAgain() {
 
 $(document).ready(function() {
 	
+	$("#reveal").addClass("loaded");
+	
 	$(".sidebar-nav A").mousedown(function(e) {
 		e.preventDefault();
-		$(this).click();
-	});
+		$("#wrapper").removeClass("toggled");
+		$("#reveal").removeClass("loaded");
+		
+		switch ( this.id ) {
+		case "freerunButt":
+			setTimeout(function(){ window.location.href = "/index.html"; },500);
+			break;
+		case "timedButt":
+			setTimeout(function(){ window.location.href = "/timed.html"; },500);
+			break;
 
-	//textFit($('#distance'));
-	//textFit($('#theTime'));
+		case "distanceButt":
+			setTimeout(function(){ window.location.href = "/laps.html"; },500);
+			break;
+			
+		case "configButt":
+			setTimeout(function(){ window.location.href = "/config.html"; },500);
+			break;
+
+		default:
+		}
+		
+	});
+	
 
 	if (document.location.hostname == "localhost") {
 		tryAgain();
@@ -144,7 +165,7 @@ $(document).ready(function() {
 	// setTimeout Example
 	(function loopingFunction2() {
 	    updateSpeed();
-	    setTimeout(loopingFunction2, 750);
+	    setTimeout(loopingFunction2, 1000);
 	})(); 
 
 });

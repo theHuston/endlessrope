@@ -15,6 +15,8 @@ var progressNote;
 var shutdownNote;
 var connectionNote;
 var connectingNote;
+var updateNote;
+var updateConfirmNote;
 var connectingProgress;
 
 var wirelessNetwork;
@@ -25,11 +27,33 @@ var wirelessListButton = $("#wirelessListButton");
 $(document).ready(function() {
 	//socket.emit('setup init', " ");
 	
+	$("#reveal").addClass("loaded");
+	
 	$(".sidebar-nav A").mousedown(function(e) {
 		e.preventDefault();
-		$(this).click();
+		$("#wrapper").removeClass("toggled");
+		$("#reveal").removeClass("loaded");
+		
+		switch ( this.id ) {
+		case "freerunButt":
+			setTimeout(function(){ window.location.href = "/index.html"; },500);
+			break;
+		case "timedButt":
+			setTimeout(function(){ window.location.href = "/timed.html"; },500);
+			break;
+
+		case "distanceButt":
+			setTimeout(function(){ window.location.href = "/laps.html"; },500);
+			break;
+			
+		case "configButt":
+			setTimeout(function(){ window.location.href = "/config.html"; },500);
+			break;
+
+		default:
+		}
+		
 	});
-	 
 
 	$("#newbutton").mousedown(function() {
 		shutDownConfirm();
@@ -228,11 +252,13 @@ function setConnectionStatus( _connected ){
 	
 	if ( connected = true ) {
 		var status = ssid + " | " + ipAddress;
-		$("#status").text("Connected");
+		$("#status").text("CONNECTED");
+		$("#wifiStatus").removeClass("alert-warning");
 		$("#wifiStatus").addClass("alert-success");
 		$("#status_info").text(status);
 	} else {
 		$("#status").text("Not Connected");
+		$("#wifiStatus").removeClass("alert-success");
 		$("#wifiStatus").addClass("alert-warning");
 		$("#status_info").text("");
 	}
@@ -242,13 +268,14 @@ function setConnectionStatus( _connected ){
 
 socket.on('init', function(_connected, _ipAddress, _ssid, _version) {
 	
-	setConnectionStatus( _connected );
+	
 
 	version = _version;
 	$("#version").text(version);
 
 	ipAddress = _ipAddress;
 	ssid = _ssid;
+	setConnectionStatus( _connected );
 	
 	//qrcode.makeCode( ipAddress+":8080" ); // make another code.
 
@@ -292,6 +319,46 @@ socket.on('init', function(_connected, _ipAddress, _ssid, _version) {
 	showMessage(message, "warning", "center", 8000 );
 	connectingProgress.close();
 	connectingNote.close();
+	
+}).on('updateNeeded', function( message ){
+		
+	updateNote = noty({
+		text : message,
+		type : "warning",
+		modal : true,
+		layout : "center"
+	});
+	
+	updateConfirmNote = noty({
+		text : '<strong>Would you like to update now?</strong>',
+		modal : false,
+		layout : "center",
+		buttons : [{
+			addClass : 'btn btn-success',
+			text : 'Update',
+			onClick : function($noty) {
+
+				// this = button element
+				// $noty = $noty element
+
+				$noty.close();
+				noty({
+					text : 'Downloading',
+					type : 'alert',
+					layout : 'center',
+					modal : true,
+					timeout : 2000
+				});
+			}
+		}, {
+			addClass : 'btn btn-primary',
+			text : 'Cancel',
+			onClick : function($noty) {
+				$noty.close();
+			}
+		}]
+	});
+	
 	
 });
 
