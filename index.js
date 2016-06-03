@@ -1,11 +1,17 @@
-"use strict";
 var express = require('express');
 
 var app = express();
-// Create express by calling the prototype in var express
 
 var os = require('os');
 var exec = require('child_process').exec;
+
+var WiFiControl = require("wifi-control");
+var wifiStatus;
+var connected = false;
+var ip_address = "";
+
+var wirelessList = [];
+//var connectedAddress = "";
 
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
@@ -29,16 +35,6 @@ console.log(pjson.version);
 var version = pjson.version;
 
 var i = 0;
-/*var sensorInputs = new Timer(1,10)
- .on("stop",function stop() {
- console.log("sensor inputs")
- sensor.consume_device_signal(null)
- //sensorInputs.start();
- var t = Math.round(Math.abs(Math.sin(++i/100)*100))*0.40+1;
- console.log("next timer",t);
- console.log("timer i",i);
- sensorInputs = new Timer(1,t).on("stop",stop).start();
- }).start();*/
 var sensorInputs = new Timer(1, 10); sensorInputs;
 function startTesting() {
 	sensorInputs.on("stop", function stop() {
@@ -59,21 +55,19 @@ function resetState(activity) {
 	_isStarted = false;
 
 	//_currentActivity = activity||"FREECLIMB";
-
+	if(activity == "")
 	theDistance = 0;
 	//stopTesting();
 };
 
 // Get the module
 /*
-• Timer will start on pull when the "Finished" Race overview is showing.
+ • Timer will start on pull when the "Finished" Race overview is showing.
 
-• The reset doesn't reset the distance on the timed climb.
+ • The reset doesn't reset the distance on the timed climb.
 
-• The Mileage presets on the distance page climb only work when the timer is running.
-*/
-
-//var robot = require("robotjs");
+ • The Mileage presets on the distance page climb only work when the timer is running.
+ */
 
 var counter = 0;
 var currentSpeed = 0;
@@ -87,8 +81,6 @@ var speedometer = 0;
 var message = "";
 
 var REFRESH_SPEED_MS = 1000;
-//125
-//15000;
 
 var _timeout = 5;
 var _timeoutCount = 0;
@@ -108,72 +100,156 @@ var theDistance = 0;
 var _racing = false;
 var _isStarted = false;
 
-var interfaces = os.networkInterfaces();
-var addresses = [];
-for (var k in interfaces) {
-	for (var k2 in interfaces[k]) {
-		var address = interfaces[k][k2];
-		if (address.family === 'IPv4' && !address.internal) {
-			addresses.push(address.address);
-		}
-	}
+WiFiControl.init({
+	debug : true,
+	connectionTimeout : 20000
+});
+
+wifiStatus = WiFiControl.getIfaceState();
+if (wifiStatus.connection == 'connected') {
+	connected = true;
 }
 
-console.log(addresses);
+console.log(wifiStatus);
 
 app.use(express.static(__dirname + '/frontend'));
 app.get('/', function(req, res) {
 	res.sendFile('./index.html');
 });
 
-function rebootTheMachine(){
+// -- GET IP ADDRESS --
+function getLocalIp() {
+	var interfaces = os.networkInterfaces();
+	var addresses = [];
+	for (var k in interfaces) {
+		for (var k2 in interfaces[k]) {
+			var address = interfaces[k][k2];
+			if (address.family === 'IPv4' && !address.internal) {
+				addresses.push(address.address);
+			}
+		}
+	}
+
+	//console.log(addresses);
+	return addresses[0];
+}
+
+// -- LOCAL REBOOT --
+function rebootTheMachine() {
 	console.log("Restarting machine");
 
-		exec("sudo reboot", function(error, stdout, stderr) {
-			if (error !== null) {
-				console.log("exec errror: " + error);
-			}
-		});
+	exec("sudo reboot", function(error, stdout, stderr) {
+		if (error !== null) {
+			console.log("exec errror: " + error);
+		}
+	});
 }
 
 var testTimer;
 io.on('connection', function(socket) {
 	resetState();
-	console.log('a user connected');
-
-	io.emit('init', addresses[0], version);
 	
-	socket.on('check for updates', function(){
+	console.log('a user connected');
+	wifiStatus = WiFiControl.getIfaceState();
+	if (wifiStatus.connection == 'connected') {
+		connected = true;
+	}
+	ip_address = getLocalIp();
+	io.emit('init', connected, ip_address, wifiStatus.ssid, version);
+	
+
+	// -- CHECK FOR UPDATES --
+	socket.on('check for updates', function() {
 		// Start checking
-		console.log( "Checking for updates.");
+		console.log("Checking for updates.");
 		autoupdater.fire('check');
 	});
 
+	// -- WIRELESS --
+	socket.on('wireless', function(_function, _option, _option2) {
+		if ( typeof _function === 'undefined') {
+			_function = "start";
+		}
+
+		switch ( _function ) {
+		case "start":
+
+			WiFiControl.scanForWiFi(function(err, response) {
+				if (err) {
+					message = "Wifi Error : " + err;
+					console.error(message);
+					io.emit('showMessage', message, "error", null);
+				}
+
+				io.emit('getWireless', response.networks);
+
+				console.log(response);
+			});
+
+			break;
+		//case "stop":
+		//	wireless.stop();
+		//	break;
+
+		case "connect":
+			var _ap = {
+				ssid : _option.toString(),
+				password : _option2.toString()
+			};
+			var results = WiFiControl.connectToAP(_ap, function(err, response) {
+				if (err) {
+					message = "Exec Error : " + err;
+					console.error(message);
+					io.emit('connectedWifiFail', err );
+				} else {
+					console.log("Chris "+response[0]+response[1]);
+					connected = true;
+					var ip_address = getLocalIp();
+					io.emit('connectedWifiSuccess', ip_address);
+				}
+				
+				
+			});
+
+			break;
+
+		default:
+		}
+	});
+
+	// -- USER DISCONNECT --
 	socket.on('disconnect', function() {
 		resetState();
 		console.log('user disconnected');
 
 	});
 
+	//-- USER FINISHLINE --
 	socket.on('finishline', function(player) {
 		console.log("finishline event");
 		finishLine(player);
 	});
 
+	// -- SHUTDOWN --
 	socket.on('please shutdown', function(msg) {
 		console.log("Closing");
 
 		exec("sudo poweroff", function(error, stdout, stderr) {
 			if (error !== null) {
-				console.log("exec errror: " + error);
+				message = "Exec Error : " + error;
+				console.error(message);
+				io.emit('showMessage', message, "error", null);
+
 			}
 		});
 	});
-	
+
+	// -- REBOOT --
 	socket.on('please reboot', function(msg) {
 		rebootTheMachine();
 	});
 
+	// -- ON YOUR MARKS --
 	socket.on('on your mark', function(activity, option) {
 		console.log("On your mark.");
 		resetState();
@@ -227,8 +303,9 @@ function theyStarted() {
 function theyStopped() {
 	if (_currentActivity == "FREECLIMB") {
 		stopwatch.stop();
+		_isStarted = false;
 	}
-	_isStarted = false;
+	
 }
 
 var isPulling = false;
@@ -255,7 +332,7 @@ function updateDistance(o) {
 		if (_isStarted) {
 			theDistance = theDistance - o.distance;
 		} else {
-			theDistance = 0;
+			theDistance = theDistance;
 		}
 	} else if (_currentActivity == "TIMEDCLIMB") {
 		if (_isStarted) {
@@ -269,20 +346,21 @@ function updateDistance(o) {
 	console.log("distance updated", theDistance);
 }
 
-// The callback passed to watch will be called when the button on GPIO #4 is
-// pressed.
+// -- START WEB BROWSER --
 http.listen(8080, function() {
 	console.log('listening on *:8080');
-	exec("DISPLAY=:0 kweb -KJHB 'http://localhost:8080'", function(error, stdout, stderr) {
-		//exec("DISPLAY=:0 chromium-browser --kiosk --enable-kiosk-mode --enabled --touch-events --touch-events-ui --disable-ipv6 --allow-file-access-from-files --disable-java --disable-restore-session-state --disable-sync --disable-translate --disk-cache-size=1 --media-cache-size=1 http://localhost:8080", function(error, stdout, stderr) {
-		//exec("DISPLAY=:0 chromium-browser  --touch-events --disable-touch-drag-drop --disable-restore-session-state --incognito  --kiosk --start-maximized http://localhost:8080", function(error, stdout, stderr) {
-		console.log("stdout: " + stdout);
-		console.log("stderr: " + stderr);
-		displayUp = true;
-		if (error !== null) {
-			console.log("exec errror: " + error);
-		}
-	});
+
+	/*
+	 //exec("DISPLAY=:0 kweb -KJHB 'http://localhost:8080'", function(error, stdout, stderr) {
+	 //exec("DISPLAY=:0 chromium-browser --disable-pinch --kiosk --enable-kiosk-mode --enabled --touch-events --touch-events-ui --disable-ipv6 --allow-file-access-from-files --disable-java --disable-restore-session-state --disable-sync --disable-translate --disk-cache-size=1 --media-cache-size=1 http://localhost:8080", function(error, stdout, stderr) {
+	 exec("DISPLAY=:0 chromium-browser  --touch-events --disable-touch-drag-drop --disable-restore-session-state --incognito  --kiosk --start-maximized http://localhost:8080", function(error, stdout, stderr) {
+	 console.log("stdout: " + stdout);
+	 console.log("stderr: " + stderr);
+	 displayUp = true;
+	 if (error !== null) {
+	 console.log("exec errror: " + error);
+	 }
+	 }); */
 
 	sensor.on('update', function(hz) {
 
@@ -303,7 +381,9 @@ http.listen(8080, function() {
 		io.emit('speed', currentSpeed, theDistance, _topSpeed, _avgSpeed, stopwatch.ms);
 
 	}).on("error", function(err) {
-		console.log("SENSOR ERROR:", err);
+		message = "SENSOR ERROR:", err;
+		console.log(message);
+		io.emit('showMessage', message, "error", null);
 	}).start();
 	processor.on("observe", function(o) {
 		//console.log("observed", o);
@@ -339,64 +419,64 @@ autoupdater.on('git-clone', function() {
 });
 autoupdater.on('check.up-to-date', function(v) {
 	message = "You have the latest version: " + v;
-	console.info( message );
-	io.emit('showMessage', message, "success", "topCenter", null );
+	console.info(message);
+	io.emit('showMessage', message, "success", "topCenter", 5000);
 });
 autoupdater.on('check.out-dated', function(v_old, v) {
 	message = "Your version is outdated. " + v_old + " of " + v;
-	console.warn( message );
-	io.emit('showMessage', message, "warning", "topCenter", null );
+	console.warn(message);
+	io.emit('showMessage', message, "warning", "topCenter", null);
 	autoupdater.fire('download-update');
 	// If autoupdate: false, you'll have to do this manually.
 	// Maybe ask if the'd like to download the update.
 });
 autoupdater.on('update.downloaded', function() {
 	message = "Update downloaded and ready for install";
-	console.log( message );
+	console.log(message);
 	//io.emit('showMessage', message,"alert" );
 	autoupdater.fire('extract');
 	// If autoupdate: false, you'll have to do this manually.
 });
 autoupdater.on('update.not-installed', function() {
 	message = "The Update was already in your folder! It's read for install";
-	console.log( message );
-	io.emit('showMessage', message );
+	console.log(message);
+	io.emit('showMessage', message);
 	autoupdater.fire('extract');
 	// If autoupdate: false, you'll have to do this manually.
 });
 autoupdater.on('update.extracted', function() {
 	message = "Update extracted successfully!";
 	//io.emit('showMessage', message, "success" );
-	console.log( message );
+	console.log(message);
 	console.warn("RESTART THE MACHINE!");
-	io.emit('showMessage', "Update extracted successfully! Please restart the machine now. ", "success", null );
+	io.emit('showMessage', "Update successfull! Restarting now", "success", null);
 	rebootTheMachine();
 });
 autoupdater.on('download.start', function(name) {
 	message = "Starting downloading: " + name;
-	console.log( message );
-	io.emit('showMessage', message, "alert", 12000 );
+	console.log(message);
+	//io.emit('showMessage', message, "alert", 12000 );
 });
 autoupdater.on('download.progress', function(name, perc) {
-	process.stdout.write("Downloading " + perc + "%");
+	//process.stdout.write("Downloading " + perc + "%");
 });
 autoupdater.on('download.end', function(name) {
 	message = "Downloaded " + name;
-	console.log( message );
+	console.log(message);
 	//io.emit('showMessage', message, "alert" );
 });
 autoupdater.on('download.error', function(err) {
 	message = "Error when downloading: " + err;
-	console.error( message );
-	io.emit('showMessage', message, "error", null );
+	console.error(message);
+	io.emit('showMessage', message, "error", null);
 });
 autoupdater.on('end', function() {
 	message = "Update Complete";
-	console.log( message );
+	console.log(message);
 	//io.emit('showMessage', message );
 });
 autoupdater.on('error', function(name, e) {
 	message = name + " : " + e;
 	console.error(name, e);
-	io.emit('showMessage', message, "error", null );
+	io.emit('showMessage', message, "error", null);
 });

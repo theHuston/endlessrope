@@ -1,9 +1,9 @@
 {
   "name": "endlessrope",
-  "version": "0.9.25",
-  "auto-updater":{
-    "repo":"theHuston/endlessrope",
-    "branch":"master"
+  "version": "0.9.5",
+  "auto-updater": {
+    "repo": "theHuston/endlessrope",
+    "branch": "master"
   },
   "description": "Axios EndlessRope",
   "dependencies": {
@@ -13,7 +13,8 @@
     "onoff": "*",
     "running-average": "*",
     "socket.io": "*",
-    "timer-stopwatch": "*"
+    "timer-stopwatch": "*",
+    "wifi-control": "^2.0.0"
   },
   "script": {
     "start": "node index.js"
