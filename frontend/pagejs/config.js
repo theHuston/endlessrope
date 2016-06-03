@@ -340,6 +340,8 @@ socket.on('init', function(_connected, _ipAddress, _ssid, _version) {
 
 				// this = button element
 				// $noty = $noty element
+				
+				socket.emit('start update');
 
 				$noty.close();
 				noty({
