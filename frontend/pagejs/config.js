@@ -258,7 +258,7 @@ function shutItDown() {
 function setConnectionStatus( _connected ){
 	connected = _connected;
 	
-	if ( connected = true ) {
+	if ( connected == true ) {
 		var status = ssid + " | " + ipAddress;
 		$("#status").text("CONNECTED");
 		$("#wifiStatus").removeClass("alert-warning");
