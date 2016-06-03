@@ -10,12 +10,11 @@ body {
   min-height: 100%;
   font-family: 'aviano_sansregular' !important;
 }
-body
-{
-    position: fixed; 
-    overflow-y: hidden;
-    width: 100%;
-    height: 99.5%;
+body {
+  position: fixed;
+  overflow-y: hidden;
+  width: 100%;
+  height: 99.5%;
 }
 body {
   background-color: #D3D3D3;
@@ -30,8 +29,18 @@ a:visited {
   cursor: url(cursor.png), none;
   !important;
 }
-::-webkit-scrollbar {
-  display: none;
+/*::-webkit-scrollbar
+{
+	display: none;
+}*/
+#reveal {
+  /*opacity: 1;*/
+  visibility: visible;
+  transition: all 500ms ease-in-out;
+}
+#reveal.loaded {
+  opacity: 0;
+  visibility: hidden;
 }
 #standalone {
   -webkit-transform: scale(0.8);
@@ -86,29 +95,29 @@ h5 {
   margin-bottom: 4px;
   color: #2975A6;
   font-size: 18px;
-  display: block; 
-  overflow:visible;
+  display: block;
+  overflow: visible;
   /*height: 10px !important;*/
   font-weight: bold;
   line-height: 1;
 }
 .btn-primary .glyphicon {
-	color:#FFFFFF;
+  color: #FFFFFF;
 }
-.alert{
-	margin-bottom: 0px;
+.alert {
+  margin-bottom: 0px;
 }
 .progress {
-	margin-bottom: 0px;
+  margin-bottom: 0px;
 }
 .btn {
   cursor: none;
   outline: none;
 }
 .glyphicon {
-	overflow: hidden;
+  overflow: hidden;
 }
-IMG {
+img {
   cursor: none;
   outline: none;
 }
@@ -224,11 +233,26 @@ IMG {
   border-right: 1px solid #EEEEEE;
   border-top-left-radius: 0;
 }
+.navbar-toggle:hover,
+.navbar-toggle:active {
+  background-color: #E8E8E8;
+  border-bottom: 1px solid #BFBFBF;
+  border-right: 1px solid #BFBFBF;
+}
 .navbar-toggle img {
   /*width: 55px;*/
 }
 .sidebar-nav .btn {
-	text-align: left;
+  text-align: left;
+  /*+border-radius: 0;*/
+  -moz-border-radius: 0;
+  -webkit-border-radius: 0;
+  -khtml-border-radius: 0;
+  border-radius: 0;
+}
+.sidebar-nav .btn:hover,
+.sidebar-nav .btn:active {
+  background-color: #D3D3D3;
 }
 .page-header {
   padding-bottom: 15px;
@@ -311,6 +335,13 @@ IMG {
   -ms-user-select: none;
   user-select: none;
 }
+.table-responsive {
+  height: 360px;
+  overflow-y: auto;
+}
+.table-responsive table {
+  /*height: 998px;*/
+}
 /*FINISHED*/
 #timeTable td {
   vertical-align: bottom;
@@ -383,27 +414,27 @@ IMG {
   text-align: center;
 }
 .gauge {
-    position: absolute;
-    /*margin-top: -50px;*/
-    /*margin-left: -80px;*/
-    /*width: 500px;*/
-    /*height: 400px;*/
+  position: absolute;
+  /*margin-top: -50px;*/
+  /*margin-left: -80px;*/
+  /*width: 500px;*/
+  /*height: 400px;*/
 }
 #top_speed_gauge {
-	margin-top: -108px;
+  margin-top: -108px;
 }
 #minMax {
-    margin-top: -20px;
-    display: block;
-    margin-bottom: 40px;
-    width: 360px;
+  margin-top: -20px;
+  display: block;
+  margin-bottom: 40px;
+  width: 360px;
 }
 #label {
-	display: block;
+  display: block;
 }
 #minMax .text-muted {
-    width: 70px;
-    text-align: center;
+  width: 70px;
+  text-align: center;
 }
 #speed_gauge {
   /*border: 1px solid black;*/
