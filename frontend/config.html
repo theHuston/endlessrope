@@ -14,6 +14,9 @@
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/fonts.css" rel="stylesheet">
         <link href="css/sidebar.css" rel="stylesheet">
+        
+        <!-- keyboard widget css & script -->
+		<link href="bower_components/keyboard/dist/css/keyboard-basic.min.css" rel="stylesheet">
 
         <!-- Custom styles for this template -->
         <link href="css/dashboard.css" rel="stylesheet">
@@ -28,24 +31,24 @@
     <div id="wrapper">
     
     <!-- InstanceBeginEditable name="popup" -->
-    <!-- Add content to the popup -->
-	  <div id="my_popup">
+    <!-- Add content to the popup 
+	  <div id="my_popup">-->
 	
-	    <h2>Would you like to shutdown?</h2>
+	    <!--<h2>Would you like to shutdown?</h2>
 	
-	    <!-- Add an optional button to close the popup -->
+	     Add an optional button to close the popup 
 	    <button id="cancel">Cancel</button>
 	    <button id="shutdown">Shutdown</button>
 	
 	  </div>
 	  <div id="shutting_down">
 	
-	    <h2>Shutting down now</h2>
+	    <h2>Shutting down now</h2>-->
 		
 	    <!-- Add an optional button to close the popup 
-	    <button class="my_popup_close">Close</button>-->
+	    <button class="my_popup_close">Close</button>
 	
-	  </div>
+	  </div>-->
     <!-- InstanceEndEditable -->
 
         <!-- Sidebar -->
@@ -104,9 +107,37 @@
 	                            	</tr> -->
 	                            	<tr>
 	                            		<td>
-	                            			IP Address
+	                            			Wifi Status
 	                            		</td>
-	                            		<td id="ipaddress">000.000.0.00</td>
+	                            		<td>
+	                            			<div id="wifiStatus" class="alert" role="alert">
+	                            				<strong><span id="status"></span></strong>   <span id="ssid"></span> | <span id="ipAddress"></span>
+	                            			</div>
+	                            			
+	                            		</td>
+	                            	</tr>
+	                            	<tr width="20%">
+	                            		<td>
+	                            			Wifi Networks
+	                            		</td>
+	                            		<td>
+	                            			<!-- Single button -->
+	                            			<div class="btn-group btn-group-lg" role="group">
+												<div class="btn-group btn-group-lg" role="group">
+												  <button type="button" class="btn btn-default dropdown-toggle" id="networksButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+												    Find Wifi Networks
+												    <span class="caret"></span>
+												  </button>
+												  <ul id="wirelessListButton" class="dropdown-menu">
+												     <li><a href="#">No networks.</a></li>
+												    <!-- <li role="separator" class="divider"></li>-->
+												  </ul>
+												</div>
+												<button type="button" draggable='false' class="btn btn-default" id="wifiCheck"><span class="glyphicon glyphicon-repeat" aria-hidden="true"></span></button>
+											</div>
+											
+											
+										</td>
 	                            	</tr>
 	                            	<!-- <tr>
 	                            		<td>QR Code</td>
@@ -119,7 +150,7 @@
 	                            			SHUTDOWN
 	                            		</td>
 	                            		<td>
-	                            			<a draggable='false' class="btn btn-md btn-primary" id="newbutton">SHUTDOWN</a>
+	                            			<button draggable='false' type="button" class="btn btn-lg btn-primary" id="newbutton"><span class="glyphicon glyphicon-off pull-left" style="padding-right: 15px;"  aria-hidden="true"></span>   SHUTDOWN</button>
 	                            		</td>
 	                            	</tr>
 	                            	<tr>
@@ -135,9 +166,42 @@
 	                            			Updates
 	                            		</td>
 	                            		<td>
-	                            			<a draggable='false' class="btn btn-sm btn-primary" id="updateCheck">Check for Updates</a>
+	                            			<button draggable='false' class="btn btn-sm btn-primary" id="updateCheck" aria-hidden="true">Check for Updates</button>
 	                            		</td>
 	                            	</tr>
+	                            	<tr>
+	                            		<td>
+	                            			
+	                            		</td>
+	                            		<td>
+	                            			
+	                            		</td>
+	                            	</tr>
+	                            	<tr>
+	                            		<td>
+	                            			
+	                            		</td>
+	                            		<td>
+	                            			
+	                            		</td>
+	                            	</tr>
+	                            	<tr>
+	                            		<td>
+	                            			
+	                            		</td>
+	                            		<td>
+	                            			
+	                            		</td>
+	                            	</tr>
+	                            	<tr>
+	                            		<td>
+	                            			
+	                            		</td>
+	                            		<td>
+	                            			
+	                            		</td>
+	                            	</tr>
+
 	                               
 	                            </tbody>
 	                        </table>
@@ -156,16 +220,19 @@
 
         <!-- Bootstrap core JavaScript
         ================================================== -->
+        
+        <script src="https://code.jquery.com/pep/0.4.1/pep.js"></script>
         <!-- Placed at the end of the document so the pages load faster --> 
         <script src="js/jquery.min.js"></script>
         
         
+        
         <!--<link rel="stylesheet" href="../css/debug-windowsize.css">
-        <script src="../js/window-size.js"></script>-->
+        <script src="../js/window-size.js"></script>
         
         <script type="text/javascript" src="js/textFit.min.js"></script>
 		<script type="text/javascript" src="js/fastclick.js"></script>
-        <script type="text/javascript" src="js/jquery.popupoverlay.js"></script>
+        <script type="text/javascript" src="js/jquery.popupoverlay.js"></script>-->
         
         <script type="text/javascript" src="bower_components/noty/js/noty/packaged/jquery.noty.packaged.min.js"></script>
         
@@ -179,6 +246,8 @@
         <script src="lib/socket.io-1.3.5.js"></script>
         
         <!-- InstanceBeginEditable name="script" -->
+        <script src="bower_components/keyboard/js/jquery.keyboard.js"></script>
+        
 		<script src="js/qrcode.js"></script>
 		<script src="js/jquery.popupoverlay.js"></script>
         <script src="pagejs/config.js"></script>
