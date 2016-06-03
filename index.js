@@ -153,7 +153,10 @@ io.on('connection', function(socket) {
 	wifiStatus = WiFiControl.getIfaceState();
 	if (wifiStatus.connection == 'connected') {
 		connected = true;
+	} else {
+		connected = false;
 	}
+	
 	ip_address = getLocalIp();
 	io.emit('init', connected, ip_address, wifiStatus.ssid, version);
 	
@@ -247,6 +250,10 @@ io.on('connection', function(socket) {
 	// -- REBOOT --
 	socket.on('please reboot', function(msg) {
 		rebootTheMachine();
+	});
+	
+	socket.on('start update', function(){
+		autoupdater.fire('download-update');
 	});
 
 	// -- ON YOUR MARKS --
@@ -425,8 +432,9 @@ autoupdater.on('check.up-to-date', function(v) {
 autoupdater.on('check.out-dated', function(v_old, v) {
 	message = "Your version is outdated. " + v_old + " of " + v;
 	console.warn(message);
-	io.emit('showMessage', message, "warning", "topCenter", null);
-	autoupdater.fire('download-update');
+	io.emit('updateNeeded', message );
+	//io.emit('showMessage', message, "warning", "topCenter", null);
+	//autoupdater.fire('download-update');
 	// If autoupdate: false, you'll have to do this manually.
 	// Maybe ask if the'd like to download the update.
 });
@@ -445,12 +453,12 @@ autoupdater.on('update.not-installed', function() {
 	// If autoupdate: false, you'll have to do this manually.
 });
 autoupdater.on('update.extracted', function() {
-	message = "Update extracted successfully!";
+	message = "Update Complete.<br><h3>Restarting</h3>";
 	//io.emit('showMessage', message, "success" );
 	console.log(message);
 	console.warn("RESTART THE MACHINE!");
-	io.emit('showMessage', "Update successfull! Restarting now", "success", null);
-	rebootTheMachine();
+	io.emit('showMessage', message, "success", null);
+	setTimeout(rebootTheMachine, 2000);
 });
 autoupdater.on('download.start', function(name) {
 	message = "Starting downloading: " + name;
@@ -463,7 +471,7 @@ autoupdater.on('download.progress', function(name, perc) {
 autoupdater.on('download.end', function(name) {
 	message = "Downloaded " + name;
 	console.log(message);
-	//io.emit('showMessage', message, "alert" );
+	io.emit('showMessage', message, "alert" );
 });
 autoupdater.on('download.error', function(err) {
 	message = "Error when downloading: " + err;
@@ -471,7 +479,7 @@ autoupdater.on('download.error', function(err) {
 	io.emit('showMessage', message, "error", null);
 });
 autoupdater.on('end', function() {
-	message = "Update Complete";
+	message = "Update Complete.";
 	console.log(message);
 	//io.emit('showMessage', message );
 });
