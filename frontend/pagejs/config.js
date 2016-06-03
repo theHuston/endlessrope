@@ -355,6 +355,7 @@ socket.on('init', function(_connected, _ipAddress, _ssid, _version) {
 			text : 'Cancel',
 			onClick : function($noty) {
 				$noty.close();
+				updateNote.close();
 			}
 		}]
 	});
