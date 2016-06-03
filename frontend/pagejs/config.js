@@ -330,7 +330,7 @@ socket.on('init', function(_connected, _ipAddress, _ssid, _version) {
 	});
 	
 	updateConfirmNote = noty({
-		text : '<strong>Would you like to update now?</strong>',
+		text : 'Would you like to update now?',
 		modal : false,
 		layout : "center",
 		buttons : [{
