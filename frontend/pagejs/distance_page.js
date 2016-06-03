@@ -35,6 +35,11 @@ function tryAgain(){
 
 $(document).ready(function() {
 	
+	$(".sidebar-nav A").mousedown(function(e) {
+		e.preventDefault();
+		$(this).click();
+	});
+	
 	// Initialize the plugin
 	$('#my_popup').popup({
 		color : 'white',
@@ -171,6 +176,7 @@ $(document).ready(function() {
 // TAKE OFF
 socket.on('gun shot', function( ){
 	running = true;
+	showMessage("<h2>GO!</h2>","success", "topCenter", 500);
 });
 
 
@@ -193,6 +199,8 @@ socket.on('speed', function( _speed, _distance, _topSpeed, _avgSpeed, _time ){
 		}
 	}
 	//updateInfo();
+}).on('showMessage', function(_message, _type, _layout, _timeout) {
+	showMessage(_message, _type, _layout, _timeout);
 }); 
 
 function finishLine(){

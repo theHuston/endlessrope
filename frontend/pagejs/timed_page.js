@@ -22,7 +22,7 @@ var speed_gauge;
 // TAKE OFF
 socket.on('gun shot', function(_speed, _distance) {
 	finished = false;
-	showMessage("Timer Started","success");
+	showMessage("<h2>GO!</h2>","success", "topCenter", 500);
 });
 
 function tryAgain() {
@@ -32,6 +32,11 @@ function tryAgain() {
 
 
 $(document).ready(function() {
+	
+	$(".sidebar-nav A").mousedown(function(e) {
+		e.preventDefault();
+		$(this).click();
+	});
 
 	// Initialize the plugin
 	$('#my_popup').popup({
@@ -188,15 +193,15 @@ socket.on('speed', function(_speed, _distance, _topSpeed, _avgSpeed, _time) {
 
 	//updateInfo();
 
-});
-
-socket.on('finishline', function() {
+}).on('finishline', function() {
 	finished = true;
 	$("#timeTable #total_time").text(millisecondsToString(defaultTime));
 	$("#timeTable #total_distance").text(distance.toFixed(2));
 	$("#timeTable #top_speed").text(topSpeed.toFixed(2));
 	$("#timeTable #avg_speed").text(avgSpeed.toFixed(2));
 	$('#my_popup').popup("show");
+}).on('showMessage', function(_message, _type, _layout, _timeout) {
+	showMessage(_message, _type, _layout, _timeout);
 });
 
 function showMessage(msg, type, layout) {

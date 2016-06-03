@@ -31,6 +31,11 @@ function tryAgain() {
 
 
 $(document).ready(function() {
+	
+	$(".sidebar-nav A").mousedown(function(e) {
+		e.preventDefault();
+		$(this).click();
+	});
 
 	//textFit($('#distance'));
 	//textFit($('#theTime'));
@@ -133,13 +138,13 @@ $(document).ready(function() {
 	// setTimeout Example
 	(function loopingFunction() {
 	    updateInfo();
-	    setTimeout(loopingFunction, 150);
+	    setTimeout(loopingFunction, 50);
 	})(); 
 	
 	// setTimeout Example
 	(function loopingFunction2() {
 	    updateSpeed();
-	    setTimeout(loopingFunction2, 1000);
+	    setTimeout(loopingFunction2, 750);
 	})(); 
 
 });
@@ -195,7 +200,27 @@ socket.on('speed', function(_speed, _distance, _topSpeed, _avgSpeed, _time) {
 	time = _time;
 	
 	//updateInfo();
+}).on('showMessage', function(_message, _type, _layout, _timeout) {
+	showMessage(_message, _type, _layout, _timeout);
 });
+
+function showMessage(msg, type, layout, timeout) {
+	if ( typeof layout === 'undefined') {
+		layout = 'topCenter';
+	}
+	if ( typeof type === 'undefined') {
+		type = 'information';
+	}
+	if ( typeof timeout === 'undefined') {
+		timeout = 3000;
+	}
+	messageNote = noty({
+		layout : layout,
+		type : type,
+		text : msg,
+		timeout : timeout
+	});
+}
 
 function showMessage( msg, type, layout ){
 	if (typeof layout === 'undefined') { layout = 'topCenter'; }
