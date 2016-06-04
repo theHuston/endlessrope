@@ -6,7 +6,7 @@ const TEETH = 36; // number of teeth on gear
 class Sensor extends EventEmitter {
     constructor(rate) {
         super();
-        this._device = new Gpio(18, 'in', 'falling');
+        this._device = new Gpio(18, 'in', 'both');
         this._tick = null;
 
         this._rate = rate; // will emit update events every X milliseconds
