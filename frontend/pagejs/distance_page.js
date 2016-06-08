@@ -193,7 +193,7 @@ $(document).ready(function() {
 	// setTimeout Example
 	(function loopingFunction2() {
 	    updateSpeed();
-	    setTimeout(loopingFunction2, 1000);
+	    setTimeout(loopingFunction2, 250);
 	})();
 	
 	//$('.gauge').val( currentSpeed.toFixed(0) ).trigger('change');
