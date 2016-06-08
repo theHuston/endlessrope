@@ -7,9 +7,8 @@ const util = require('../util/util.js');
 
 const g = 36;
 const C = 18.849;
+C += C - (C * 0.9);
 const di = C / g;
-
-
 
 class Processor extends EventEmitter {
     constructor(sensor) {
