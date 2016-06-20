@@ -7,7 +7,7 @@ const util = require('../util/util.js');
 
 const g = 36;
 const cC = 18.849;
-var sight = cC - (cC * 0.9);
+var sight = cC - (cC * 1.2805);
 var C = cC + sight;
 const di = C / g;
 
