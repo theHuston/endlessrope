@@ -1,7 +1,7 @@
 'use strict';
 const EventEmitter = require('events').EventEmitter;
 const Gpio = require('onoff').Gpio;
-const TEETH = 36; // number of teeth on gear
+const TEETH = 6; // number of teeth on gear
 
 class Sensor extends EventEmitter {
     constructor(rate) {
