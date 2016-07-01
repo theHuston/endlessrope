@@ -1,6 +1,6 @@
 {
   "name": "endlessrope",
-  "version": "1.09",
+  "version": "1.10",
   "auto-updater": {
     "repo": "theHuston/endlessrope",
     "branch": "master"

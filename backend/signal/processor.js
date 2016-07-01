@@ -8,7 +8,7 @@ const util = require('../util/util.js');
 const g = 6;
 const cC = 18.849;
 var sight = cC - (cC * 0.9);
-var C = cC + sight;
+var C = cC;
 const di = C / g;
 
 class Processor extends EventEmitter {
