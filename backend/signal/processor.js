@@ -5,10 +5,8 @@ const LinkedList = require("../../lib/DoublyLinkedList.js").DoublyLinkedList;
 const math = require('../util/math.js');
 const util = require('../util/util.js');
 
-const g = 6;
-const cC = 18.849;
-var sight = cC - (cC * 0.9);
-var C = cC;
+const g = 36;
+const C = 18.849;
 const di = C / g;
 
 class Processor extends EventEmitter {
